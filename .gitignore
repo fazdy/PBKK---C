@@ -1,0 +1,21 @@
+# Build artifacts (.NET)
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Archives
+*.zip
+
+# Visual Studio / VS Code
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
