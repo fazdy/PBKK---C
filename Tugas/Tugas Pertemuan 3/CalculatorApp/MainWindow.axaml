@@ -1,0 +1,92 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="CalculatorApp.MainWindow"
+        Title="Calculator"
+        Width="340"
+        SizeToContent="Height"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen">
+
+    <!-- Gaya (style) tombol -->
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Height" Value="56"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Tombol operator: oranye -->
+        <Style Selector="Button.op">
+            <Setter Property="Background" Value="#FF9500"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Button.op:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#FFAD33"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <!-- Tombol Clear: merah -->
+        <Style Selector="Button.clear">
+            <Setter Property="Background" Value="#FF3B30"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Button.clear:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#FF6B60"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <!-- Tombol Equals: hijau -->
+        <Style Selector="Button.equals">
+            <Setter Property="Background" Value="#34C759"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Button.equals:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#5AD67D"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Styles>
+
+    <StackPanel Margin="16" Spacing="8">
+        <TextBlock x:Name="lblTitle"
+                   Text="Calculator"
+                   FontSize="26"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"/>
+
+        <TextBox x:Name="txtDisplay"
+                 Text="0"
+                 IsReadOnly="True"
+                 FontSize="30"
+                 Height="64"
+                 Margin="3"
+                 TextAlignment="Right"
+                 VerticalContentAlignment="Center"/>
+
+        <UniformGrid Columns="4">
+            <Button x:Name="btn7" Content="7" Click="NumberButton_Click"/>
+            <Button x:Name="btn8" Content="8" Click="NumberButton_Click"/>
+            <Button x:Name="btn9" Content="9" Click="NumberButton_Click"/>
+            <Button x:Name="btnDivide" Content="÷" Classes="op" Click="OperatorButton_Click"/>
+
+            <Button x:Name="btn4" Content="4" Click="NumberButton_Click"/>
+            <Button x:Name="btn5" Content="5" Click="NumberButton_Click"/>
+            <Button x:Name="btn6" Content="6" Click="NumberButton_Click"/>
+            <Button x:Name="btnMultiply" Content="×" Classes="op" Click="OperatorButton_Click"/>
+
+            <Button x:Name="btn1" Content="1" Click="NumberButton_Click"/>
+            <Button x:Name="btn2" Content="2" Click="NumberButton_Click"/>
+            <Button x:Name="btn3" Content="3" Click="NumberButton_Click"/>
+            <Button x:Name="btnMinus" Content="−" Classes="op" Click="OperatorButton_Click"/>
+
+            <Button x:Name="btn0" Content="0" Click="NumberButton_Click"/>
+            <Button x:Name="btnDecimal" Content="." Click="btnDecimal_Click"/>
+            <Button x:Name="btnClear" Content="C" Classes="clear" Click="btnClear_Click"/>
+            <Button x:Name="btnPlus" Content="+" Classes="op" Click="OperatorButton_Click"/>
+        </UniformGrid>
+
+        <Button x:Name="btnEquals" Content="=" Classes="equals" Click="btnEquals_Click"/>
+    </StackPanel>
+</Window>
