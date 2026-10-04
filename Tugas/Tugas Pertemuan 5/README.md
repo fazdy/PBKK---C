@@ -74,9 +74,11 @@ Tugas Pertemuan 5/
 │       └── EmptyStringToNullConverter.cs  # Mengosongkan pilihan ComboBox saat reset
 ├── Database/
 │   └── StudentDB.sql                    # CREATE DATABASE, CREATE TABLE, data contoh
+├── Screenshots/
+│   └── tampilan-aplikasi.jpg            # Screenshot aplikasi di Windows
 ├── Tests/
 │   └── StudentManager.LogicTests/       # Program uji logika lintas platform (74 skenario)
-├── LAPORAN.md                           # Laporan lengkap pengerjaan
+├── LAPORAN.md                           # Laporan pengerjaan (ringkas)
 ├── LAPORAN_BLOGSPOT.html                # Versi HTML laporan, siap ditempel ke Blogspot
 └── README.md
 ```
@@ -85,7 +87,7 @@ Tugas Pertemuan 5/
 
 > WPF dan SQL Server LocalDB hanya berjalan di **Windows**.
 
-1. Install **Visual Studio 2022** (17.8 atau lebih baru) dengan workload **.NET desktop development**. Pastikan komponen **SQL Server Express LocalDB** ikut terpasang (*Visual Studio Installer → Modify → Individual components*).
+1. Install **Visual Studio 2022/2026** dengan workload **.NET desktop development**. Pastikan komponen **SQL Server Express LocalDB** ikut terpasang (*Visual Studio Installer → Modify → Individual components*).
 2. Buka `StudentManager.sln`, lalu tekan **F5**. Paket NuGet akan di-*restore* otomatis.
 3. Saat pertama kali dijalankan, aplikasi membuat database `StudentDB`, tabel `Students`, dan 4 data contoh secara otomatis. Bila ingin membuatnya manual, jalankan `Database/StudentDB.sql` melalui *SQL Server Object Explorer*.
 
@@ -103,9 +105,19 @@ Server=(localdb)\MSSQLLocalDB;Database=StudentDB;Trusted_Connection=True;TrustSe
 
 Jika memakai SQL Server Express, ganti bagian `Server` menjadi `.\SQLEXPRESS`.
 
+### Muncul error "Unable to locate a Local Database Runtime installation" (error 52)
+
+Artinya SQL Server LocalDB belum terpasang. Buka *Visual Studio Installer → Modify → Individual components*, cari `LocalDB`, centang **SQL Server Express LocalDB**, lalu klik *Modify*. Setelah itu cek di Command Prompt:
+
+```bash
+sqllocaldb info
+```
+
+Jika `MSSQLLocalDB` belum muncul, jalankan `sqllocaldb create MSSQLLocalDB -s`, lalu jalankan ulang aplikasi.
+
 ## Pengujian
 
-Skenario pengujian manual (READ, CREATE, UPDATE, DELETE, SEARCH, STATISTICS, RESET, dan validasi) dijelaskan di [LAPORAN.md](LAPORAN.md#11-pengujian-aplikasi).
+Skenario pengujian (READ, CREATE, UPDATE, DELETE, SEARCH, STATISTICS, RESET) dijelaskan di [LAPORAN.md](LAPORAN.md#7-skenario-pengujian).
 
 Logika aplikasi juga bisa diuji tanpa Windows dan tanpa SQL Server, misalnya di macOS atau Linux. Program uji memakai kode ViewModel asli dengan repository palsu (in-memory):
 
@@ -123,5 +135,5 @@ dotnet build StudentManager.sln -p:EnableWindowsTargeting=true
 
 ## Laporan
 
-- [LAPORAN.md](LAPORAN.md): laporan lengkap dari persiapan, langkah pengerjaan, kode, pengujian, pembahasan, hingga kesimpulan.
-- `LAPORAN_BLOGSPOT.html`: isi laporan dalam format HTML. Di Blogger, buka **New Post → HTML view**, tempel seluruh isi file, lalu ganti kotak bertanda *Gambar* dengan screenshot aplikasi.
+- [LAPORAN.md](LAPORAN.md): laporan ringkas berisi pendahuluan, langkah pengerjaan, kode inti, hasil, pengujian, pembahasan, dan kesimpulan.
+- `LAPORAN_BLOGSPOT.html`: isi laporan yang sama dalam format HTML dengan screenshot sudah tertanam. Di Blogger, buka **New Post → HTML view**, lalu tempel seluruh isi file.
