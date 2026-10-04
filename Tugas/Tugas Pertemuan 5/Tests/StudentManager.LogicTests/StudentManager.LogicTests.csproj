@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Program uji logika (console) lintas platform.
+    Mengompilasi kode ASLI dari project WPF (Model, ViewModel, RelayCommand, Converter)
+    bersama repository & dialog palsu (Fakes.cs), sehingga logika aplikasi bisa diuji
+    di Windows, macOS, maupun Linux tanpa SQL Server.
+
+    Cara menjalankan: lihat README.md bagian "Pengujian".
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AppSource>$(MSBuildThisFileDirectory)../../StudentManager</AppSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AppSource)/Models/Student.cs" Link="App/Models/Student.cs" />
+    <Compile Include="$(AppSource)/ViewModels/RelayCommand.cs" Link="App/ViewModels/RelayCommand.cs" />
+    <Compile Include="$(AppSource)/ViewModels/StudentViewModel.cs" Link="App/ViewModels/StudentViewModel.cs" />
+    <Compile Include="$(AppSource)/Services/IDialogService.cs" Link="App/Services/IDialogService.cs" />
+    <Compile Include="$(AppSource)/Converters/RowNumberConverter.cs" Link="App/Converters/RowNumberConverter.cs" />
+    <Compile Include="$(AppSource)/Converters/EmptyStringToNullConverter.cs" Link="App/Converters/EmptyStringToNullConverter.cs" />
+  </ItemGroup>
+
+</Project>

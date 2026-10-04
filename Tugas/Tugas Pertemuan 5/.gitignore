@@ -1,0 +1,19 @@
+# Build output (.NET)
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Editor lain
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# File database SQL Server (jika ada yang tersalin ke folder project)
+*.mdf
+*.ldf
