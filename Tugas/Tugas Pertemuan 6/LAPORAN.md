@@ -6,7 +6,7 @@
 | **Nama** | Faizal Aldy Armiriawan |
 | **NRP** | 5025231266 |
 | **Kelas** | PBKK (C) |
-| **Kode Program** | [github.com/fazdy/PBKK---C — Tugas Pertemuan 6](https://github.com/fazdy/PBKK---C/tree/main/Tugas/Tugas%20Pertemuan%206) |
+| **Kode Program** | [Folder Tugas Pertemuan 6 di GitHub](https://github.com/fazdy/PBKK---C/tree/main/Tugas/Tugas%20Pertemuan%206) |
 
 ---
 
