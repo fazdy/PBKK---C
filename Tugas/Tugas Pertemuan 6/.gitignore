@@ -1,0 +1,14 @@
+# Build output (.NET)
+bin/
+obj/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+
+# macOS & local cache
+.DS_Store
+.local/
+Library/

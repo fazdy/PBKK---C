@@ -1,0 +1,103 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="using:StudentRegistration.Models"
+        mc:Ignorable="d" d:DesignWidth="1300" d:DesignHeight="560"
+        x:Class="StudentRegistration.MainWindow"
+        Title="Student Registration"
+        Width="1300"
+        Height="560"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="20" RowDefinitions="Auto,*,Auto">
+
+        <!-- Judul, tombol Refresh, dan Total Mahasiswa -->
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    Spacing="30"
+                    Margin="0,0,0,15">
+
+            <TextBlock Text="Student Registration"
+                       FontSize="26"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"/>
+
+            <Button Content="Refresh"
+                    Width="100"
+                    HorizontalContentAlignment="Center"
+                    VerticalAlignment="Center"
+                    Click="RefreshButton_Click"/>
+
+            <TextBlock x:Name="TotalTextBlock"
+                       Text="Total Mahasiswa: -"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Data mahasiswa dari SQL Server -->
+        <DataGrid x:Name="StudentDataGrid"
+                  Grid.Row="1"
+                  x:DataType="models:Student"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  GridLinesVisibility="All"
+                  BorderThickness="1"
+                  BorderBrush="#D0D7DE">
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn
+                    Header="ID"
+                    Binding="{Binding StudentId}"
+                    Width="60"/>
+
+                <DataGridTextColumn
+                    Header="NIM"
+                    Binding="{Binding NIM}"
+                    Width="100"/>
+
+                <DataGridTextColumn
+                    Header="Nama"
+                    Binding="{Binding Name}"
+                    Width="180"/>
+
+                <DataGridTextColumn
+                    Header="Program Studi"
+                    Binding="{Binding ProgramName}"
+                    Width="160"/>
+
+                <DataGridTextColumn
+                    Header="Tanggal Lahir"
+                    Binding="{Binding BirthDate, StringFormat={}{0:dd/MM/yyyy}}"
+                    Width="130"/>
+
+                <DataGridTextColumn
+                    Header="No. Telepon"
+                    Binding="{Binding PhoneNumber}"
+                    Width="140"/>
+
+                <!-- Mini Challenge 1 -->
+                <DataGridTextColumn
+                    Header="Alamat"
+                    Binding="{Binding Address}"
+                    Width="*"
+                    MinWidth="280"/>
+
+                <!-- Mini Challenge 2 -->
+                <DataGridTextColumn
+                    Header="Dibuat"
+                    Binding="{Binding CreatedAt, StringFormat={}{0:dd/MM/yyyy HH:mm}}"
+                    Width="165"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Status pemuatan data -->
+        <TextBlock x:Name="StatusTextBlock"
+                   Grid.Row="2"
+                   Margin="0,10,0,0"
+                   Foreground="#57606A"/>
+    </Grid>
+</Window>
