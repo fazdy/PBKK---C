@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:SIBASA.Controls"
+             xmlns:vm="using:SIBASA.ViewModels"
+             x:Class="SIBASA.Views.AksesDitolakView"
+             x:DataType="vm:AksesDitolakViewModel">
+    <Border Classes="card" Width="520" Padding="32" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Spacing="16" HorizontalAlignment="Center">
+            <Border Width="64" Height="64" CornerRadius="32" HorizontalAlignment="Center"
+                    Background="{DynamicResource DangerSoftBrush}">
+                <PathIcon Data="{StaticResource Icon.Lock}" Width="30" Height="30" Foreground="{DynamicResource DangerTextBrush}" />
+            </Border>
+            <TextBlock Classes="h1" Text="Akses ditolak" HorizontalAlignment="Center" />
+            <TextBlock Classes="muted" Text="{Binding Pesan}" TextAlignment="Center" FontSize="14" />
+            <c:SafeButton Classes="primary" HorizontalAlignment="Center" Command="{Binding KembaliCommand}" AutomationProperties.Name="Kembali ke Dashboard">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <PathIcon Data="{StaticResource Icon.Dashboard}" />
+                    <TextBlock Text="Kembali ke Dashboard" />
+                </StackPanel>
+            </c:SafeButton>
+        </StackPanel>
+    </Border>
+</UserControl>

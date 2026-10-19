@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:SIBASA.Controls"
+             xmlns:vm="using:SIBASA.ViewModels"
+             x:Class="SIBASA.Views.StartupView"
+             x:DataType="vm:StartupViewModel">
+    <Grid>
+        <StackPanel Width="480" Spacing="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Width="76" Height="76" CornerRadius="22" HorizontalAlignment="Center"
+                    Background="{StaticResource CardGreenBrush}" BoxShadow="0 12 30 -10 #8016A34A">
+                <PathIcon Data="{StaticResource Icon.Recycle}" Width="42" Height="42" Foreground="White" />
+            </Border>
+            <StackPanel Spacing="4" HorizontalAlignment="Center">
+                <TextBlock Text="SIBASA" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center"
+                           Foreground="{DynamicResource TextPrimaryBrush}" />
+                <TextBlock Text="Sistem Informasi Bank Sampah" Classes="muted" HorizontalAlignment="Center" />
+            </StackPanel>
+
+            <!-- Status: sedang menyiapkan database -->
+            <StackPanel Spacing="10" IsVisible="{Binding IsWorking}">
+                <ProgressBar IsIndeterminate="True" Width="240" HorizontalAlignment="Center" />
+                <TextBlock Text="Menyiapkan database…" Classes="muted" HorizontalAlignment="Center" />
+            </StackPanel>
+
+            <!-- Status: gagal, tampilkan pesan yang dapat ditindaklanjuti -->
+            <Border Classes="card" IsVisible="{Binding HasError}">
+                <StackPanel Spacing="12">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Border Classes="iconCircle danger">
+                            <PathIcon Data="{StaticResource Icon.DatabaseAlert}" />
+                        </Border>
+                        <TextBlock Grid.Column="1" Classes="h2" Margin="12,0,0,0" VerticalAlignment="Center"
+                                   Text="Database tidak dapat disiapkan" />
+                    </Grid>
+                    <TextBlock Classes="body" Text="{Binding ErrorMessage}" />
+                    <StackPanel IsVisible="{Binding DatabasePath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                        <TextBlock Classes="label" Text="Lokasi database" />
+                        <SelectableTextBlock Text="{Binding DatabasePath}" FontSize="12" TextWrapping="Wrap"
+                                             Foreground="{DynamicResource TextSecondaryBrush}" />
+                    </StackPanel>
+                    <TextBlock Classes="hint" Text="{Binding LogPath, StringFormat='Detail teknis tersimpan di folder log: {0}'}" />
+                    <c:SafeButton Classes="primary" HorizontalAlignment="Left" Command="{Binding InitializeCommand}" AutomationProperties.Name="Coba lagi">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <PathIcon Data="{StaticResource Icon.Refresh}" />
+                            <TextBlock Text="Coba lagi" />
+                        </StackPanel>
+                    </c:SafeButton>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="{Binding VersionText}" Classes="hint" HorizontalAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</UserControl>

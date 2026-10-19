@@ -1,0 +1,137 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:SIBASA.Controls"
+             xmlns:vm="using:SIBASA.ViewModels"
+             xmlns:m="using:SIBASA.Models"
+             x:Class="SIBASA.Views.PenggunaView"
+             x:DataType="vm:PenggunaViewModel">
+    <Panel>
+        <!-- ================= Daftar pengguna ================= -->
+        <Border Classes="card" Padding="0">
+            <Grid RowDefinitions="Auto,*">
+                <Grid Margin="18,18,18,14" ColumnDefinitions="*,Auto">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <c:SafeButton Classes="primary" Command="{Binding TambahCommand}" AutomationProperties.Name="Tambah pengguna">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <PathIcon Data="{StaticResource Icon.UserPlus}" />
+                                <TextBlock Text="Tambah pengguna" />
+                            </StackPanel>
+                        </c:SafeButton>
+                        <c:SafeButton Classes="secondary" Command="{Binding UbahCommand}" AutomationProperties.Name="Ubah / reset password">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <PathIcon Data="{StaticResource Icon.Edit}" />
+                                <TextBlock Text="Ubah / reset password" />
+                            </StackPanel>
+                        </c:SafeButton>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Classes="muted" Text="{Binding ResultText}" VerticalAlignment="Center" />
+                </Grid>
+                <Border Grid.Row="1" BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,1,0,0">
+                    <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding Selected}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:DataType="m:User" Header="Username" Binding="{Binding Username}" Width="150" />
+                            <DataGridTextColumn x:DataType="m:User" Header="Nama Lengkap" Binding="{Binding NamaLengkap}" Width="2*" />
+                            <DataGridTemplateColumn Header="Peran" Width="120" SortMemberPath="RoleText">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate x:DataType="m:User">
+                                        <Border Classes="badge" Classes.info="{Binding IsAdmin}" Margin="12,0">
+                                            <TextBlock Text="{Binding RoleText}" />
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Status" Width="120" SortMemberPath="IsActive">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate x:DataType="m:User">
+                                        <Border Classes="badge" Classes.success="{Binding IsActive}" Margin="12,0">
+                                            <TextBlock Text="{Binding StatusText}" />
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn x:DataType="m:User" Header="Login terakhir" Binding="{Binding LastLoginText}" Width="170" SortMemberPath="LastLoginAt" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- ================= Panel samping: form pengguna ================= -->
+        <Border Classes="drawer" IsVisible="{Binding IsFormOpen}">
+            <Grid RowDefinitions="Auto,*,Auto">
+                <Grid Margin="22,20,14,12" ColumnDefinitions="*,Auto">
+                    <StackPanel Spacing="2">
+                        <TextBlock Classes="h2" Text="{Binding FormTitle}" />
+                        <TextBlock Classes="muted" Text="Password disimpan dalam bentuk hash" />
+                    </StackPanel>
+                    <c:SafeButton Grid.Column="1" Classes="ghost" VerticalAlignment="Top"
+                            Command="{Binding BatalCommand}" ToolTip.Tip="Tutup" AutomationProperties.Name="Tutup">
+                        <PathIcon Data="{StaticResource Icon.Close}" />
+                    </c:SafeButton>
+                </Grid>
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="14" Margin="22,0,22,10">
+                        <StackPanel>
+                            <TextBlock Classes="label" Text="Username *" />
+                            <TextBox Text="{Binding FormUsername}" Watermark="mis. petugas2" MaxLength="30"
+                                     IsReadOnly="{Binding IsEditMode}"
+                                     Classes.invalid="{Binding UsernameError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <TextBlock Classes="error" Text="{Binding UsernameError}"
+                                       IsVisible="{Binding UsernameError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <TextBlock Classes="hint" Text="4–30 karakter: huruf kecil, angka, titik, atau garis bawah. Tidak dapat diubah setelah dibuat." />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Classes="label" Text="Nama lengkap *" />
+                            <TextBox Text="{Binding FormNamaLengkap}" Watermark="mis. Rina Marlina" MaxLength="100"
+                                     Classes.invalid="{Binding NamaLengkapError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <TextBlock Classes="error" Text="{Binding NamaLengkapError}"
+                                       IsVisible="{Binding NamaLengkapError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Classes="label" Text="Peran *" />
+                            <ComboBox ItemsSource="{Binding RoleOptions}" SelectedItem="{Binding FormRole}" />
+                            <TextBlock Classes="error" Text="{Binding RoleError}"
+                                       IsVisible="{Binding RoleError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <TextBlock Classes="hint" Text="Admin: akses penuh. Petugas: nasabah dan transaksi." />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Classes="label" Text="Status akun" />
+                            <ToggleSwitch IsChecked="{Binding FormIsActive}" OnContent="Aktif" OffContent="Nonaktif" />
+                            <TextBlock Classes="error" Text="{Binding IsActiveError}"
+                                       IsVisible="{Binding IsActiveError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <TextBlock Classes="hint" Text="Anda tidak dapat menonaktifkan atau menurunkan peran akun sendiri."
+                                       IsVisible="{Binding IsEditingSelf}" />
+                        </StackPanel>
+                        <Border Height="1" Background="{DynamicResource LineBrush}" />
+                        <StackPanel>
+                            <TextBlock Classes="label" Text="{Binding PasswordLabel}" />
+                            <TextBox Text="{Binding FormPassword}" PasswordChar="•" Watermark="{Binding PasswordWatermark}"
+                                     Classes.invalid="{Binding PasswordError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <TextBlock Classes="error" Text="{Binding PasswordError}"
+                                       IsVisible="{Binding PasswordError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <TextBlock Classes="hint" Text="{Binding PasswordHint}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Classes="label" Text="Ulangi password" />
+                            <TextBox Text="{Binding FormKonfirmasi}" PasswordChar="•" Watermark="Ketik ulang password"
+                                     Classes.invalid="{Binding KonfirmasiError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <TextBlock Classes="error" Text="{Binding KonfirmasiError}"
+                                       IsVisible="{Binding KonfirmasiError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+                <Border Grid.Row="2" BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,1,0,0" Padding="22,14">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                        <c:SafeButton Classes="secondary" Content="Batal" Command="{Binding BatalCommand}" />
+                        <c:SafeButton Classes="primary" Command="{Binding SimpanCommand}" AutomationProperties.Name="Simpan">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <PathIcon Data="{StaticResource Icon.Save}" />
+                                <TextBlock Text="Simpan" />
+                            </StackPanel>
+                        </c:SafeButton>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+    </Panel>
+</UserControl>

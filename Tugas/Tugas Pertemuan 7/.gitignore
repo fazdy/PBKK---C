@@ -1,0 +1,39 @@
+# ===================== .NET =====================
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userprefs
+TestResults/
+*.trx
+
+# Hasil publish dan paket rilis (diunggah ke Google Drive, bukan ke Git)
+publish/
+release/
+
+# Konfigurasi lokal berisi connection string. Yang di-commit hanya appsettings.example.json.
+appsettings.json
+appsettings.*.local.json
+
+# Database SQLite lokal dan file pendampingnya
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+
+# ===================== macOS =====================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ===================== IDE =====================
+.vscode/
+.idea/
+*.swp
+*.sln.docstates
+.vs/

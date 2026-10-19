@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Infografis SIBASA</title>
+<style>
+  :root {
+    --navy: #0f1e3d; --navy-2: #172a52; --blue: #2563eb; --green: #16a34a;
+    --green-soft: #dcfce7; --amber: #d97706; --purple: #7c3aed; --ink: #0f172a;
+    --muted: #475569; --line: #e2e8f0; --bg: #f1f5f9; --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font-family: "Inter", "Segoe UI", -apple-system, Helvetica, Arial, sans-serif; }
+  .page { max-width: 1000px; margin: 24px auto; background: var(--card);
+          border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(15,30,61,.12); }
+  header { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 60%, #14532d 100%);
+           color: #fff; padding: 28px 36px; display: flex; gap: 20px; align-items: center; }
+  .logo { width: 72px; height: 72px; border-radius: 18px; background: var(--green);
+          display: grid; place-items: center; font-size: 40px; flex: none; }
+  header h1 { margin: 0; font-size: 34px; letter-spacing: .5px; }
+  header p { margin: 4px 0 0; opacity: .9; font-size: 16px; }
+  .chips { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.14); }
+  main { padding: 24px 36px 30px; display: grid; gap: 18px; }
+  .row { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; }
+  .box { border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .box h2 { margin: 0 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: .8px; color: var(--blue); }
+  .box p, .box li { font-size: 13.5px; line-height: 1.55; color: var(--muted); margin: 0; }
+  .box ul, .box ol { margin: 0; padding-left: 18px; }
+  .statement { background: var(--green-soft); border-color: #bbf7d0; }
+  .statement p { color: #14532d; font-size: 14px; }
+  /* Gambaran UI (wireframe) */
+  .ui { display: grid; grid-template-columns: 150px 1fr; height: 250px; border-radius: 12px;
+        overflow: hidden; border: 1px solid var(--line); }
+  .ui .side { background: var(--navy); color: #cbd5e1; padding: 12px 10px; font-size: 11.5px; }
+  .ui .side b { color: #fff; display: block; margin-bottom: 10px; font-size: 13px; }
+  .ui .side div { padding: 5px 8px; border-radius: 6px; margin-bottom: 2px; }
+  .ui .side .on { background: var(--blue); color: #fff; }
+  .ui .content { background: #f8fafc; padding: 10px 12px; display: grid; gap: 8px;
+                 grid-template-rows: 18px 50px 1fr 34px; }
+  .ui .top { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .c { border-radius: 8px; color: #fff; padding: 6px 8px; font-size: 10px; }
+  .c strong { display: block; font-size: 15px; }
+  .c1 { background: var(--green); } .c2 { background: var(--blue); }
+  .c3 { background: var(--amber); } .c4 { background: var(--purple); }
+  .charts { display: grid; grid-template-columns: 1.6fr 1fr; gap: 8px; }
+  .chart { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px;
+           font-size: 10px; color: var(--muted); display: flex; flex-direction: column; }
+  .bars { flex: 1; display: flex; align-items: flex-end; gap: 6px; padding-top: 4px; }
+  .bars span { flex: 1; background: var(--blue); border-radius: 3px 3px 0 0; }
+  .pie { flex: 1; display: grid; place-items: center; }
+  .pie i { width: 62px; height: 62px; border-radius: 50%;
+           background: conic-gradient(var(--green) 0 42%, var(--blue) 42% 70%, var(--amber) 70% 85%, var(--purple) 85% 100%); }
+  .act { background: #fff; border: 1px solid var(--line); border-radius: 8px; font-size: 10px;
+         color: var(--muted); padding: 4px 8px; }
+  .themes { display: flex; gap: 8px; margin-top: 8px; font-size: 12px; color: var(--muted); align-items: center; }
+  .sw { width: 18px; height: 18px; border-radius: 5px; border: 1px solid var(--line); display: inline-block; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; }
+  td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .f { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 12.5px; color: var(--muted); }
+  .f b { display: block; color: var(--ink); font-size: 13.5px; margin-bottom: 2px; }
+  .f .n { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
+          background: var(--green); color: #fff; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+  footer { background: var(--navy); color: #cbd5e1; padding: 12px 36px; font-size: 12px;
+           display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  @media (max-width: 760px) {
+    .row, .features { grid-template-columns: 1fr; }
+    header { flex-direction: column; align-items: flex-start; }
+    main { padding: 18px 16px; }
+  }
+  @media print { body { background: #fff; } .page { box-shadow: none; margin: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="logo">♻</div>
+    <div>
+      <h1>SIBASA</h1>
+      <p>Sistem Informasi Bank Sampah — setor sampah, jadi saldo.</p>
+      <div class="chips">
+        <span class="chip">Aplikasi Desktop Windows &amp; macOS</span>
+        <span class="chip">C# · .NET 10 LTS</span>
+        <span class="chip">Avalonia UI 11.3 (XAML)</span>
+        <span class="chip">MVVM</span>
+        <span class="chip">SQLite</span>
+        <span class="chip">LiveCharts2</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="row">
+      <div class="box">
+        <h2>Deskripsi Singkat</h2>
+        <p>Aplikasi desktop untuk pengurus bank sampah tingkat RT/RW. Petugas mencatat setoran sampah terpilah warga;
+           nilai rupiah dihitung otomatis dari <b>berat × harga per kg</b> dan langsung menambah saldo nasabah.
+           Pengurus memantau sampah terkumpul, saldo, dan tren setoran lewat dashboard.</p>
+      </div>
+      <div class="box statement">
+        <h2 style="color:#15803d">Pernyataan Produk</h2>
+        <p>Untuk <b>pengurus dan petugas bank sampah</b> yang masih mencatat secara manual, SIBASA adalah aplikasi desktop
+           yang menggabungkan pengelolaan nasabah, transaksi setoran/penarikan, dan dashboard analitik, dengan saldo yang
+           selalu konsisten berkat transaksi database.</p>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2>Gambaran UI</h2>
+      <div class="ui">
+        <div class="side">
+          <b>♻ SIBASA</b>
+          <div class="on">▣ Dashboard</div>
+          <div>👥 Nasabah</div>
+          <div>♻ Jenis Sampah</div>
+          <div>⇄ Transaksi</div>
+          <div>🕘 Riwayat</div>
+          <div>👤 Pengguna</div>
+          <div>⚙ Pengaturan</div>
+        </div>
+        <div class="content">
+          <div class="top"><span><b>Dashboard</b></span><span>☀ / ☾ &nbsp; Admin ▾</span></div>
+          <div class="cards">
+            <div class="c c1">Nasabah aktif<strong>20</strong></div>
+            <div class="c c2">Sampah bulan ini<strong>245 kg</strong></div>
+            <div class="c c3">Total saldo<strong>Rp1,25 jt</strong></div>
+            <div class="c c4">Transaksi hari ini<strong>4</strong></div>
+          </div>
+          <div class="charts">
+            <div class="chart">Setoran (kg) per bulan
+              <div class="bars"><span style="height:35%"></span><span style="height:55%"></span><span style="height:62%"></span><span style="height:48%"></span><span style="height:80%"></span><span style="height:95%"></span></div>
+            </div>
+            <div class="chart">Komposisi kategori<div class="pie"><i></i></div></div>
+          </div>
+          <div class="act">🕘 Aktivitas terbaru — Setoran STR-…-00081 · Botol PET 3,5 kg · oleh petugas</div>
+        </div>
+      </div>
+      <div class="themes">Tema: <span class="sw" style="background:#f8fafc"></span> Terang
+        <span class="sw" style="background:#0b1220"></span> Gelap &nbsp;·&nbsp; Angka di atas hanya contoh; di aplikasi dihitung dari database.</div>
+    </div>
+
+    <div class="row">
+      <div class="box">
+        <h2>Tujuan Produk</h2>
+        <ol>
+          <li>Menggantikan buku tabungan dan Excel dengan aplikasi terpusat.</li>
+          <li>Menghitung nilai setoran otomatis dan akurat.</li>
+          <li>Menjaga saldo nasabah selalu benar dan tidak pernah minus.</li>
+          <li>Menyajikan rekap sampah per jenis dan per bulan.</li>
+          <li>Menerapkan arsitektur MVVM agar mudah diuji dan dikembangkan.</li>
+        </ol>
+      </div>
+      <div class="box">
+        <h2>Manfaat</h2>
+        <ul>
+          <li><b>Pengurus:</b> rekap siap pakai untuk laporan dan penjualan ke pengepul.</li>
+          <li><b>Petugas:</b> tanpa hitung manual, antrean lebih cepat.</li>
+          <li><b>Warga:</b> tabungan sampah tercatat rapi dan transparan.</li>
+          <li><b>Lingkungan:</b> pemilahan sampah lebih terdorong.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="box">
+        <h2>Sasaran &amp; Indikator</h2>
+        <table>
+          <tr><th>Sasaran</th><th>Indikator</th></tr>
+          <tr><td>Transaksi cepat</td><td>1 setoran ≤ 30 detik, nilai otomatis</td></tr>
+          <tr><td>Saldo akurat</td><td>Saldo = Σ setoran − Σ penarikan; tarik &gt; saldo ditolak</td></tr>
+          <tr><td>Data mudah dicari</td><td>Cari nama/no. rekening, filter RW &amp; status</td></tr>
+          <tr><td>Dashboard dinamis</td><td>Kartu &amp; grafik berubah setelah transaksi</td></tr>
+          <tr><td>Aman &amp; andal</td><td>Hash password, query berparameter, akses per peran</td></tr>
+        </table>
+      </div>
+      <div class="box">
+        <h2>Batasan</h2>
+        <ul>
+          <li>Tanpa portal web/mobile; nasabah tidak login.</li>
+          <li>Tanpa pembayaran digital; penarikan tunai.</li>
+          <li>Satu database lokal SQLite, tanpa sinkronisasi antar-unit.</li>
+          <li>Tanpa ekspor PDF/Excel dan email otomatis.</li>
+          <li>Tanpa modul penjualan ke pengepul/stok gudang.</li>
+          <li>Harga sampah di data contoh hanya ilustrasi.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2>Fitur Utama</h2>
+      <div class="features">
+        <div class="f"><span class="n">1</span><b>Login &amp; Hak Akses</b>Admin dan Petugas, password di-hash PBKDF2.</div>
+        <div class="f"><span class="n">2</span><b>Dashboard</b>4 kartu statistik, grafik kg/bulan, pie kategori, aktivitas.</div>
+        <div class="f"><span class="n">3</span><b>Data Nasabah</b>CRUD, cari, filter RW &amp; status.</div>
+        <div class="f"><span class="n">4</span><b>Jenis Sampah</b>Kategori, jenis, dan harga per kg.</div>
+        <div class="f"><span class="n">5</span><b>Setoran</b>Berat × harga otomatis, saldo bertambah.</div>
+        <div class="f"><span class="n">6</span><b>Penarikan</b>Saldo tidak boleh minus, ada konfirmasi.</div>
+        <div class="f"><span class="n">7</span><b>Riwayat</b>Filter periode/jenis, pembatalan oleh Admin.</div>
+        <div class="f"><span class="n">8</span><b>Kelola Pengguna</b>Tambah petugas, peran, reset password.</div>
+        <div class="f"><span class="n">9</span><b>Tema Terang/Gelap</b>Pilihan tersimpan otomatis.</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>♻ SIBASA v1.0 · Sistem Informasi Bank Sampah</span>
+    <span>Pilah sampahmu, tabung nilainya.</span>
+  </footer>
+</div>
+</body>
+</html>

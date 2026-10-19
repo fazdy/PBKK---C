@@ -1,0 +1,36 @@
+SIBASA - Sistem Informasi Bank Sampah (versi 1.0.0)
+====================================================
+
+Aplikasi desktop pencatatan tabungan bank sampah: setor sampah, jadi saldo.
+Tidak perlu memasang .NET maupun server database. Database SQLite dibuat
+otomatis (lengkap dengan data contoh) saat aplikasi pertama kali dibuka.
+
+AKUN DEMO
+---------
+  Admin   : admin   / Admin#123
+  Petugas : petugas / Petugas#123
+
+CARA MENJALANKAN - WINDOWS 10/11 (64-bit)
+-----------------------------------------
+1. Ekstrak (Extract All) file zip ke sebuah folder, misalnya Documents\SIBASA.
+2. Klik dua kali SIBASA.exe.
+3. Jika muncul "Windows protected your PC" (SmartScreen), klik
+   "More info" lalu "Run anyway". Peringatan ini muncul karena aplikasi
+   belum memiliki sertifikat code signing berbayar.
+   File appsettings.json harus tetap berada di folder yang sama dengan SIBASA.exe.
+
+CARA MENJALANKAN - macOS (Mac Intel, macOS 13 atau lebih baru)
+--------------------------------------------------------------
+1. Ekstrak file zip, lalu pindahkan SIBASA.app ke folder Applications.
+2. Buka SIBASA.app. Jika muncul peringatan "Apple could not verify ...",
+   klik "Done", buka System Settings > Privacy & Security, gulir ke bawah,
+   lalu klik "Open Anyway" pada baris SIBASA.
+   Alternatif lewat Terminal:
+     xattr -dr com.apple.quarantine /Applications/SIBASA.app
+3. Pada Mac Apple Silicon (M1/M2/M3), aplikasi berjalan lewat Rosetta 2.
+
+LOKASI DATA
+-----------
+  Windows : C:\Users\<nama>\AppData\Local\SIBASA\sibasa.db
+  macOS   : ~/Library/Application Support/SIBASA/sibasa.db
+Hapus file sibasa.db (saat aplikasi tertutup) untuk kembali ke data contoh awal.

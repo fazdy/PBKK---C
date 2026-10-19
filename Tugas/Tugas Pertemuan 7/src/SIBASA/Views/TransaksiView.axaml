@@ -1,0 +1,309 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:SIBASA.Controls"
+             xmlns:vm="using:SIBASA.ViewModels"
+             xmlns:m="using:SIBASA.Models"
+             x:Class="SIBASA.Views.TransaksiView"
+             x:DataType="vm:TransaksiViewModel">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Spacing="20" Margin="0,0,6,4">
+            <Grid ColumnDefinitions="2*,20,3*" Height="520">
+
+                <!-- ================= Langkah 1: pilih nasabah ================= -->
+                <Border Classes="card" Padding="0">
+                    <Grid RowDefinitions="Auto,Auto,*,Auto">
+                        <StackPanel Margin="18,18,18,10" Spacing="2">
+                            <TextBlock Classes="h2" Text="1. Pilih nasabah" />
+                            <TextBlock Classes="muted" Text="Hanya nasabah aktif yang dapat bertransaksi" />
+                        </StackPanel>
+                        <TextBox Grid.Row="1" Margin="18,0,18,10" Text="{Binding KataKunciNasabah}"
+                                 Watermark="Cari nama atau no. rekening…">
+                            <TextBox.InnerLeftContent>
+                                <PathIcon Data="{StaticResource Icon.Search}" Width="16" Height="16" Margin="10,0,0,0"
+                                          Foreground="{DynamicResource TextMutedBrush}" />
+                            </TextBox.InnerLeftContent>
+                        </TextBox>
+                        <Panel Grid.Row="2">
+                            <ListBox Classes="pilih" Margin="8,0" ItemsSource="{Binding NasabahList}"
+                                     SelectedItem="{Binding SelectedNasabah}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="m:Nasabah">
+                                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                            <Border Width="34" Height="34" CornerRadius="17" Background="{DynamicResource PrimarySoftBrush}">
+                                                <TextBlock Text="{Binding Inisial}" FontSize="12" FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource PrimaryTextBrush}"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <StackPanel Grid.Column="1" Margin="10,0" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding NamaLengkap}" FontWeight="SemiBold" FontSize="13.5"
+                                                           TextTrimming="CharacterEllipsis" Foreground="{DynamicResource TextPrimaryBrush}" />
+                                                <TextBlock Text="{Binding Ringkasan}" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2" Text="{Binding SaldoText}" FontWeight="SemiBold" FontSize="13"
+                                                       VerticalAlignment="Center" Foreground="{DynamicResource TextPrimaryBrush}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel IsVisible="{Binding IsNasabahListEmpty}" Spacing="8"
+                                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <PathIcon Data="{StaticResource Icon.Nasabah}" Width="32" Height="32"
+                                          Foreground="{DynamicResource TextMutedBrush}" />
+                                <TextBlock Classes="muted" Text="{Binding NasabahEmptyText}" TextAlignment="Center" MaxWidth="260" />
+                            </StackPanel>
+                        </Panel>
+                        <TextBlock Grid.Row="3" Classes="error" Margin="18,0,18,12" Text="{Binding NasabahError}"
+                                   IsVisible="{Binding NasabahError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                    </Grid>
+                </Border>
+
+                <!-- ================= Langkah 2: catat transaksi ================= -->
+                <Border Grid.Column="2" Classes="card">
+                    <Grid RowDefinitions="Auto,Auto,*">
+                        <TextBlock Classes="h2" Text="2. Catat transaksi" />
+
+                        <!-- Ringkasan nasabah terpilih -->
+                        <Border Grid.Row="1" Classes="summary" Margin="0,12,0,0">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Classes="h3" Text="{Binding NamaNasabahText}" />
+                                    <TextBlock Classes="muted" Text="{Binding InfoNasabahText}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Saldo saat ini" FontSize="12" HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource TextMutedBrush}" />
+                                    <TextBlock Text="{Binding SaldoText}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource SuccessTextBrush}" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <TabControl Grid.Row="2" SelectedIndex="{Binding SelectedTabIndex}" Margin="0,8,0,0" Padding="0">
+                            <!-- Setoran -->
+                            <TabItem AutomationProperties.Name="Setoran">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <PathIcon Data="{StaticResource Icon.CashPlus}" Width="18" Height="18" />
+                                        <TextBlock Text="Setoran" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <StackPanel Spacing="14" Margin="0,12,0,0">
+                                    <Grid ColumnDefinitions="3*,12,2*">
+                                        <StackPanel>
+                                            <TextBlock Classes="label" Text="Jenis sampah *" />
+                                            <ComboBox ItemsSource="{Binding JenisList}" SelectedItem="{Binding SelectedJenis}"
+                                                      PlaceholderText="Pilih jenis sampah" MaxDropDownHeight="320"
+                                                      Classes.invalid="{Binding JenisError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate x:DataType="m:JenisSampah">
+                                                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                                            <TextBlock Text="{Binding NamaJenis}" VerticalAlignment="Center" />
+                                                            <TextBlock Grid.Column="1" Text="{Binding NamaKategori}" FontSize="11" Opacity="0.65"
+                                                                       Margin="8,0,0,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                                            <TextBlock Grid.Column="2" Text="{Binding HargaText}" Margin="12,0,0,0"
+                                                                       VerticalAlignment="Center" FontWeight="SemiBold" />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <TextBlock Classes="error" Text="{Binding JenisError}"
+                                                       IsVisible="{Binding JenisError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                            <TextBlock Classes="hint" Text="Belum ada jenis sampah aktif. Admin dapat menambahkannya di menu Jenis Sampah."
+                                                       IsVisible="{Binding IsJenisEmpty}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Classes="label" Text="Berat (kg) *" />
+                                            <NumericUpDown Value="{Binding Berat}" Minimum="0" Maximum="1000" Increment="0.1"
+                                                           FormatString="0.00" ParsingNumberStyle="Float" Watermark="0,00"
+                                                           Classes.invalid="{Binding BeratError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                            <TextBlock Classes="error" Text="{Binding BeratError}"
+                                                       IsVisible="{Binding BeratError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                            <TextBlock Classes="hint" Text="Gunakan koma, mis. 2,5"
+                                                       IsVisible="{Binding BeratError, Converter={x:Static StringConverters.IsNullOrEmpty}}" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <StackPanel>
+                                        <TextBlock Classes="label" Text="Catatan (opsional)" />
+                                        <TextBox Text="{Binding CatatanSetoran}" Watermark="mis. sudah dipilah dan bersih" MaxLength="200" />
+                                        <TextBlock Classes="error" Text="{Binding CatatanError}"
+                                                   IsVisible="{Binding CatatanError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                    </StackPanel>
+                                    <!-- Pratinjau perhitungan otomatis -->
+                                    <Border Classes="summary">
+                                        <Grid ColumnDefinitions="*,*,Auto">
+                                            <StackPanel>
+                                                <TextBlock Text="Harga" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                                                <TextBlock Classes="h3" Text="{Binding HargaText}" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="Berat" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                                                <TextBlock Classes="h3" Text="{Binding BeratText}" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="2">
+                                                <TextBlock Text="Total masuk saldo" FontSize="12" HorizontalAlignment="Right"
+                                                           Foreground="{DynamicResource TextMutedBrush}" />
+                                                <TextBlock Text="{Binding TotalText}" FontSize="22" FontWeight="Bold" HorizontalAlignment="Right"
+                                                           Foreground="{DynamicResource SuccessTextBrush}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                                        <c:SafeButton Classes="secondary" Content="Reset" Command="{Binding ResetFormCommand}" />
+                                        <c:SafeButton Classes="primary" Command="{Binding SimpanSetoranCommand}" AutomationProperties.Name="Simpan Setoran">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="{StaticResource Icon.Save}" />
+                                                <TextBlock Text="Simpan Setoran" />
+                                            </StackPanel>
+                                        </c:SafeButton>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem>
+
+                            <!-- Penarikan -->
+                            <TabItem AutomationProperties.Name="Penarikan">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <PathIcon Data="{StaticResource Icon.CashMinus}" Width="18" Height="18" />
+                                        <TextBlock Text="Penarikan" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <StackPanel Spacing="14" Margin="0,12,0,0">
+                                    <StackPanel>
+                                        <TextBlock Classes="label" Text="Jumlah penarikan (Rp) *" />
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <NumericUpDown Value="{Binding JumlahPenarikan}" Minimum="0" Maximum="1000000000"
+                                                           Increment="1000" FormatString="N0" ParsingNumberStyle="Number"
+                                                           Watermark="mis. 10.000"
+                                                           Classes.invalid="{Binding JumlahError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                            <c:SafeButton Grid.Column="1" Classes="secondary" Margin="8,0,0,0"
+                                                    Content="Tarik semua" Command="{Binding TarikSemuaCommand}" />
+                                        </Grid>
+                                        <TextBlock Classes="error" Text="{Binding JumlahError}"
+                                                   IsVisible="{Binding JumlahError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                        <TextBlock Classes="hint" Text="Jumlah tidak boleh melebihi saldo. Penarikan dibayarkan tunai."
+                                                   IsVisible="{Binding JumlahError, Converter={x:Static StringConverters.IsNullOrEmpty}}" />
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock Classes="label" Text="Catatan (opsional)" />
+                                        <TextBox Text="{Binding CatatanPenarikan}" Watermark="mis. untuk keperluan sekolah" MaxLength="200" />
+                                        <TextBlock Classes="error" Text="{Binding CatatanError}"
+                                                   IsVisible="{Binding CatatanError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                    </StackPanel>
+                                    <Border Classes="summary">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <StackPanel>
+                                                <TextBlock Text="Saldo saat ini" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                                                <TextBlock Classes="h3" Text="{Binding SaldoText}" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="Saldo setelah penarikan" FontSize="12" HorizontalAlignment="Right"
+                                                           Foreground="{DynamicResource TextMutedBrush}" />
+                                                <TextBlock Text="{Binding SisaSaldoText}" FontSize="22" FontWeight="Bold" HorizontalAlignment="Right"
+                                                           Foreground="{DynamicResource WarningTextBrush}" IsVisible="{Binding !IsSisaMinus}" />
+                                                <TextBlock Text="{Binding SisaSaldoText}" FontSize="22" FontWeight="Bold" HorizontalAlignment="Right"
+                                                           Foreground="{DynamicResource DangerTextBrush}" IsVisible="{Binding IsSisaMinus}" />
+                                                <TextBlock Text="Melebihi saldo" FontSize="12" HorizontalAlignment="Right"
+                                                           Foreground="{DynamicResource DangerTextBrush}" IsVisible="{Binding IsSisaMinus}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                                        <c:SafeButton Classes="secondary" Content="Reset" Command="{Binding ResetFormCommand}" />
+                                        <c:SafeButton Classes="primary" Command="{Binding SimpanPenarikanCommand}" AutomationProperties.Name="Simpan Penarikan">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="{StaticResource Icon.Save}" />
+                                                <TextBlock Text="Simpan Penarikan" />
+                                            </StackPanel>
+                                        </c:SafeButton>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- ================= Transaksi hari ini ================= -->
+            <Border Classes="card" Padding="0">
+                <Grid RowDefinitions="Auto,Auto">
+                    <Grid Margin="18,16" ColumnDefinitions="*,Auto">
+                        <StackPanel Spacing="2">
+                            <TextBlock Classes="h2" Text="Transaksi hari ini" />
+                            <TextBlock Classes="muted" Text="Sepuluh transaksi terakhir hari ini, termasuk yang dibatalkan" />
+                        </StackPanel>
+                        <c:SafeButton Grid.Column="1" Classes="ghost" Command="{Binding RefreshCommand}" ToolTip.Tip="Muat ulang" AutomationProperties.Name="Muat ulang">
+                            <PathIcon Data="{StaticResource Icon.Refresh}" />
+                        </c:SafeButton>
+                    </Grid>
+                    <Border Grid.Row="1" BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,1,0,0">
+                        <Panel Height="260">
+                            <DataGrid ItemsSource="{Binding HariIni}" RowHeight="54">
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="Transaksi" Width="175" SortMemberPath="Tanggal">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate x:DataType="m:RiwayatTransaksi">
+                                                <StackPanel Margin="12,0" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding NoTransaksi}" FontWeight="SemiBold" FontSize="13" />
+                                                    <TextBlock Text="{Binding JamText}" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Jenis" Width="118" SortMemberPath="JenisText">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate x:DataType="m:RiwayatTransaksi">
+                                                <Border Classes="badge" Classes.success="{Binding IsSetoran}" Classes.warning="{Binding !IsSetoran}" Margin="12,0">
+                                                    <TextBlock Text="{Binding JenisText}" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Nasabah" Width="*" MinWidth="120" SortMemberPath="NamaNasabah">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate x:DataType="m:RiwayatTransaksi">
+                                                <StackPanel Margin="12,0" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding NamaNasabah}" FontSize="13.5" TextTrimming="CharacterEllipsis" />
+                                                    <TextBlock Text="{Binding NoRekening}" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Rincian" Width="1.6*" MinWidth="150" SortMemberPath="Rincian">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate x:DataType="m:RiwayatTransaksi">
+                                                <TextBlock Margin="12,0" VerticalAlignment="Center" FontSize="13" Text="{Binding Rincian}"
+                                                           TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Rincian}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Nominal" Width="115" SortMemberPath="NominalBertanda">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate x:DataType="m:RiwayatTransaksi">
+                                                <TextBlock Margin="12,0" VerticalAlignment="Center" FontWeight="SemiBold" Text="{Binding NominalText}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Status" Width="120" SortMemberPath="IsCancelled">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate x:DataType="m:RiwayatTransaksi">
+                                                <Border Classes="badge" Classes.danger="{Binding IsCancelled}" Margin="12,0">
+                                                    <TextBlock Text="{Binding StatusText}" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <StackPanel IsVisible="{Binding !HasHariIni}" Spacing="8"
+                                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <PathIcon Data="{StaticResource Icon.Receipt}" Width="30" Height="30"
+                                          Foreground="{DynamicResource TextMutedBrush}" />
+                                <TextBlock Classes="muted" Text="Belum ada transaksi hari ini" />
+                            </StackPanel>
+                        </Panel>
+                    </Border>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

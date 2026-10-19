@@ -1,0 +1,211 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:SIBASA.Controls"
+             xmlns:vm="using:SIBASA.ViewModels"
+             xmlns:m="using:SIBASA.Models"
+             xmlns:conv="using:SIBASA.Converters"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             x:Class="SIBASA.Views.DashboardView"
+             x:DataType="vm:DashboardViewModel">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Spacing="20" Margin="0,0,6,4">
+
+            <!-- Baris keterangan dan tombol muat ulang -->
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                    <PathIcon Data="{StaticResource Icon.Clock}" Width="15" Height="15" Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Classes="muted" Text="{Binding UpdatedText}" VerticalAlignment="Center" />
+                </StackPanel>
+                <c:SafeButton Grid.Column="1" Classes="secondary" Command="{Binding RefreshCommand}" AutomationProperties.Name="Muat ulang">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <PathIcon Data="{StaticResource Icon.Refresh}" />
+                        <TextBlock Text="Muat ulang" />
+                    </StackPanel>
+                </c:SafeButton>
+            </Grid>
+
+            <!-- ================= Kartu statistik ================= -->
+            <Grid ColumnDefinitions="*,16,*,16,*,16,*">
+                <Border Grid.Column="0" Classes="stat" Background="{StaticResource CardGreenBrush}">
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+                        <TextBlock Text="Nasabah aktif" FontSize="13" Opacity="0.92" VerticalAlignment="Center" />
+                        <Border Grid.Column="1" Width="36" Height="36" CornerRadius="18"
+                                Background="{StaticResource OnColorChipBrush}">
+                            <PathIcon Data="{StaticResource Icon.Nasabah}" Width="19" Height="19" Foreground="White" />
+                        </Border>
+                        <!-- Viewbox mengecilkan angka bila terlalu panjang agar tidak terpotong. -->
+                        <Viewbox Grid.Row="1" Grid.ColumnSpan="2" StretchDirection="DownOnly" HorizontalAlignment="Left" Margin="0,6,0,2">
+                            <TextBlock Classes="value" Text="{Binding NasabahAktifText}" />
+                        </Viewbox>
+                        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding NasabahAktifSub}" FontSize="12" Opacity="0.85"
+                                   TextTrimming="CharacterEllipsis" />
+                    </Grid>
+                </Border>
+                <Border Grid.Column="2" Classes="stat" Background="{StaticResource CardBlueBrush}">
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+                        <TextBlock Text="Sampah bulan ini" FontSize="13" Opacity="0.92" VerticalAlignment="Center" />
+                        <Border Grid.Column="1" Width="36" Height="36" CornerRadius="18"
+                                Background="{StaticResource OnColorChipBrush}">
+                            <PathIcon Data="{StaticResource Icon.Weight}" Width="19" Height="19" Foreground="White" />
+                        </Border>
+                        <!-- Viewbox mengecilkan angka bila terlalu panjang agar tidak terpotong. -->
+                        <Viewbox Grid.Row="1" Grid.ColumnSpan="2" StretchDirection="DownOnly" HorizontalAlignment="Left" Margin="0,6,0,2">
+                            <TextBlock Classes="value" Text="{Binding KgBulanIniText}" />
+                        </Viewbox>
+                        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding KgBulanIniSub}" FontSize="12" Opacity="0.85"
+                                   TextTrimming="CharacterEllipsis" />
+                    </Grid>
+                </Border>
+                <Border Grid.Column="4" Classes="stat" Background="{StaticResource CardAmberBrush}">
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+                        <TextBlock Text="Total saldo nasabah" FontSize="13" Opacity="0.92" VerticalAlignment="Center" />
+                        <Border Grid.Column="1" Width="36" Height="36" CornerRadius="18"
+                                Background="{StaticResource OnColorChipBrush}">
+                            <PathIcon Data="{StaticResource Icon.Wallet}" Width="19" Height="19" Foreground="White" />
+                        </Border>
+                        <!-- Viewbox mengecilkan angka bila terlalu panjang agar tidak terpotong. -->
+                        <Viewbox Grid.Row="1" Grid.ColumnSpan="2" StretchDirection="DownOnly" HorizontalAlignment="Left" Margin="0,6,0,2">
+                            <TextBlock Classes="value" Text="{Binding TotalSaldoText}" />
+                        </Viewbox>
+                        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding TotalSaldoSub}" FontSize="12" Opacity="0.85"
+                                   TextTrimming="CharacterEllipsis" />
+                    </Grid>
+                </Border>
+                <Border Grid.Column="6" Classes="stat" Background="{StaticResource CardPurpleBrush}">
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+                        <TextBlock Text="Transaksi hari ini" FontSize="13" Opacity="0.92" VerticalAlignment="Center" />
+                        <Border Grid.Column="1" Width="36" Height="36" CornerRadius="18"
+                                Background="{StaticResource OnColorChipBrush}">
+                            <PathIcon Data="{StaticResource Icon.Receipt}" Width="19" Height="19" Foreground="White" />
+                        </Border>
+                        <!-- Viewbox mengecilkan angka bila terlalu panjang agar tidak terpotong. -->
+                        <Viewbox Grid.Row="1" Grid.ColumnSpan="2" StretchDirection="DownOnly" HorizontalAlignment="Left" Margin="0,6,0,2">
+                            <TextBlock Classes="value" Text="{Binding TransaksiHariIniText}" />
+                        </Viewbox>
+                        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding TransaksiHariIniSub}" FontSize="12" Opacity="0.85"
+                                   TextTrimming="CharacterEllipsis" />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- ================= Grafik ================= -->
+            <Grid ColumnDefinitions="3*,20,2*">
+                <!-- Grafik batang: satu seri, judul menamai seri sehingga tidak perlu legenda -->
+                <Border Classes="card">
+                    <Grid RowDefinitions="Auto,*">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackPanel Spacing="2">
+                                <TextBlock Classes="h2" Text="Setoran per bulan" />
+                                <TextBlock Classes="muted" Text="Total berat sampah (kg) enam bulan terakhir" />
+                            </StackPanel>
+                            <Border Grid.Column="1" Classes="badge info" VerticalAlignment="Top">
+                                <TextBlock Text="{Binding PeriodeText}" />
+                            </Border>
+                        </Grid>
+                        <Panel Grid.Row="1" Height="280" Margin="0,12,0,0">
+                            <lvc:CartesianChart Series="{Binding BarSeries}"
+                                                XAxes="{Binding XAxes}"
+                                                YAxes="{Binding YAxes}"
+                                                LegendPosition="Hidden"
+                                                TooltipPosition="Top"
+                                                ZoomMode="None"
+                                                TooltipTextPaint="{Binding TooltipTextPaint}"
+                                                TooltipBackgroundPaint="{Binding TooltipBackgroundPaint}" />
+                            <StackPanel IsVisible="{Binding !HasBarData}" Spacing="6"
+                                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <PathIcon Data="{StaticResource Icon.ChartBar}" Width="30" Height="30"
+                                          Foreground="{DynamicResource TextMutedBrush}" />
+                                <TextBlock Classes="muted" Text="Belum ada data setoran" />
+                            </StackPanel>
+                        </Panel>
+                    </Grid>
+                </Border>
+
+                <!-- Grafik donat + legenda berisi nilai (identitas tidak hanya dari warna) -->
+                <Border Grid.Column="2" Classes="card">
+                    <Grid RowDefinitions="Auto,*">
+                        <StackPanel Spacing="2">
+                            <TextBlock Classes="h2" Text="Komposisi kategori" />
+                            <TextBlock Classes="muted" Text="{Binding TotalPeriodeText, StringFormat='Berdasarkan berat · {0}'}" />
+                        </StackPanel>
+                        <Grid Grid.Row="1" ColumnDefinitions="*,Auto" Height="280" Margin="0,12,0,0">
+                            <lvc:PieChart Series="{Binding PieSeries}"
+                                          LegendPosition="Hidden"
+                                          IsVisible="{Binding HasPieData}"
+                                          TooltipTextPaint="{Binding TooltipTextPaint}"
+                                          TooltipBackgroundPaint="{Binding TooltipBackgroundPaint}" />
+                            <ItemsControl Grid.Column="1" ItemsSource="{Binding KomposisiLegend}" Margin="12,0,0,0"
+                                          VerticalAlignment="Center" IsVisible="{Binding HasPieData}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Spacing="10" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:LegendItem">
+                                        <Grid ColumnDefinitions="Auto,*">
+                                            <Border Width="10" Height="10" CornerRadius="3" Margin="0,4,8,0"
+                                                    VerticalAlignment="Top" Background="{Binding Warna}" />
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="{Binding Nama}" FontSize="13" FontWeight="Medium"
+                                                           Foreground="{DynamicResource TextPrimaryBrush}" />
+                                                <TextBlock FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}">
+                                                    <Run Text="{Binding KgText}" />
+                                                    <Run Text=" · " />
+                                                    <Run Text="{Binding PersenText}" />
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <StackPanel Grid.ColumnSpan="2" IsVisible="{Binding !HasPieData}" Spacing="6"
+                                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <PathIcon Data="{StaticResource Icon.ChartDonut}" Width="30" Height="30"
+                                          Foreground="{DynamicResource TextMutedBrush}" />
+                                <TextBlock Classes="muted" Text="Belum ada data setoran" />
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- ================= Aktivitas terbaru ================= -->
+            <Border Classes="card">
+                <StackPanel Spacing="16">
+                    <StackPanel Spacing="2">
+                        <TextBlock Classes="h2" Text="Aktivitas terbaru" />
+                        <TextBlock Classes="muted" Text="Delapan aktivitas terakhir: transaksi dan perubahan data" />
+                    </StackPanel>
+                    <ItemsControl ItemsSource="{Binding AktivitasTerbaru}" IsVisible="{Binding HasAktivitas}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="m:Aktivitas">
+                                <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,14">
+                                    <Border Classes="iconCircle"
+                                            Classes.success="{Binding IsSetoran}"
+                                            Classes.warning="{Binding IsPenarikan}"
+                                            Classes.danger="{Binding IsBahaya}"
+                                            VerticalAlignment="Top">
+                                        <PathIcon Data="{Binding JenisAksi, Converter={x:Static conv:AppConverters.AksiIcon}}" />
+                                    </Border>
+                                    <StackPanel Grid.Column="1" Margin="12,0,12,0" Spacing="2" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Keterangan}" FontSize="13.5" TextWrapping="Wrap"
+                                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                                        <TextBlock Text="{Binding Pelaku}" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                                    </StackPanel>
+                                    <Border Grid.Column="2" Classes="badge" VerticalAlignment="Top">
+                                        <TextBlock Text="{Binding JenisAksi}" />
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <StackPanel IsVisible="{Binding !HasAktivitas}" Orientation="Horizontal" Spacing="8">
+                        <PathIcon Data="{StaticResource Icon.Empty}" Width="18" Height="18" Foreground="{DynamicResource TextMutedBrush}" />
+                        <TextBlock Classes="muted" Text="Belum ada aktivitas." />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

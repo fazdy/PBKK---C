@@ -1,0 +1,102 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:SIBASA.Controls"
+        xmlns:vm="using:SIBASA.ViewModels"
+        xmlns:svc="using:SIBASA.Services"
+        xmlns:conv="using:SIBASA.Converters"
+        x:Class="SIBASA.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="SIBASA — Sistem Informasi Bank Sampah"
+        Icon="/Assets/sibasa-256.png"
+        Width="1240" Height="780"
+        MinWidth="1100" MinHeight="680"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource AppBackgroundBrush}">
+
+    <!-- Pintasan keyboard: Esc menutup dialog; Ctrl/⌘ + 1..7 berpindah halaman. -->
+    <Window.KeyBindings>
+        <KeyBinding Gesture="Escape" Command="{Binding Dialog.CancelCommand}" />
+        <KeyBinding Gesture="Ctrl+D1" Command="{Binding NavigateShortcutCommand}" CommandParameter="dashboard" />
+        <KeyBinding Gesture="Ctrl+D2" Command="{Binding NavigateShortcutCommand}" CommandParameter="nasabah" />
+        <KeyBinding Gesture="Ctrl+D3" Command="{Binding NavigateShortcutCommand}" CommandParameter="jenis" />
+        <KeyBinding Gesture="Ctrl+D4" Command="{Binding NavigateShortcutCommand}" CommandParameter="transaksi" />
+        <KeyBinding Gesture="Ctrl+D5" Command="{Binding NavigateShortcutCommand}" CommandParameter="riwayat" />
+        <KeyBinding Gesture="Ctrl+D6" Command="{Binding NavigateShortcutCommand}" CommandParameter="pengguna" />
+        <KeyBinding Gesture="Ctrl+D7" Command="{Binding NavigateShortcutCommand}" CommandParameter="pengaturan" />
+        <KeyBinding Gesture="Meta+D1" Command="{Binding NavigateShortcutCommand}" CommandParameter="dashboard" />
+        <KeyBinding Gesture="Meta+D2" Command="{Binding NavigateShortcutCommand}" CommandParameter="nasabah" />
+        <KeyBinding Gesture="Meta+D3" Command="{Binding NavigateShortcutCommand}" CommandParameter="jenis" />
+        <KeyBinding Gesture="Meta+D4" Command="{Binding NavigateShortcutCommand}" CommandParameter="transaksi" />
+        <KeyBinding Gesture="Meta+D5" Command="{Binding NavigateShortcutCommand}" CommandParameter="riwayat" />
+        <KeyBinding Gesture="Meta+D6" Command="{Binding NavigateShortcutCommand}" CommandParameter="pengguna" />
+        <KeyBinding Gesture="Meta+D7" Command="{Binding NavigateShortcutCommand}" CommandParameter="pengaturan" />
+    </Window.KeyBindings>
+
+    <Panel>
+        <!-- Tampilan aktif: Startup, Login, atau Shell (dipilih lewat DataTemplate di App.axaml). -->
+        <ContentControl Content="{Binding CurrentView}" />
+
+        <!-- Dialog konfirmasi (dikendalikan DialogService). -->
+        <Panel IsVisible="{Binding Dialog.IsOpen}" Background="{DynamicResource OverlayBrush}">
+            <Border Classes="card dialog" Width="460" Padding="24"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Spacing="16">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Border Classes="iconCircle"
+                                Classes.danger="{Binding Dialog.Current.IsDanger, FallbackValue=False}"
+                                VerticalAlignment="Top">
+                            <PathIcon Data="{Binding Dialog.Current.IconKey, Converter={x:Static conv:AppConverters.Icon}, FallbackValue={x:Null}}" />
+                        </Border>
+                        <TextBlock Grid.Column="1" Classes="h2" Margin="12,6,0,0"
+                                   Text="{Binding Dialog.Current.Title, FallbackValue=''}" TextWrapping="Wrap" />
+                    </Grid>
+                    <TextBlock Classes="body" Foreground="{DynamicResource TextSecondaryBrush}"
+                               Text="{Binding Dialog.Current.Message, FallbackValue=''}" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                        <c:SafeButton Classes="secondary"
+                                Content="{Binding Dialog.Current.CancelText, FallbackValue='Batal'}"
+                                IsVisible="{Binding Dialog.Current.ShowCancel, FallbackValue=True}"
+                                Command="{Binding Dialog.CancelCommand}" />
+                        <c:SafeButton Classes="primary"
+                                Classes.danger="{Binding Dialog.Current.IsDanger, FallbackValue=False}"
+                                Content="{Binding Dialog.Current.ConfirmText, FallbackValue='Ya'}"
+                                Command="{Binding Dialog.ConfirmCommand}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Panel>
+
+        <!-- Notifikasi toast di pojok kanan atas (dikendalikan NotificationService). -->
+        <ItemsControl ItemsSource="{Binding Notifications.Items}" Width="380"
+                      HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,18,18,0">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Spacing="10" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="svc:ToastMessage">
+                    <Border Classes="card" Padding="14,12" BoxShadow="0 10 30 0 #33000000">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <Border Classes="iconCircle"
+                                    Classes.success="{Binding IsSuccess}"
+                                    Classes.danger="{Binding IsError}"
+                                    Classes.warning="{Binding IsWarning}"
+                                    VerticalAlignment="Top">
+                                <PathIcon Data="{Binding IconKey, Converter={x:Static conv:AppConverters.Icon}}" />
+                            </Border>
+                            <StackPanel Grid.Column="1" Margin="12,0,8,0" Spacing="2" VerticalAlignment="Center">
+                                <TextBlock Classes="h3" Text="{Binding Title}" />
+                                <TextBlock Classes="muted" Text="{Binding Text}" />
+                            </StackPanel>
+                            <c:SafeButton Grid.Column="2" Classes="ghost" Padding="4" VerticalAlignment="Top"
+                                    Command="{Binding CloseCommand}" ToolTip.Tip="Tutup" AutomationProperties.Name="Tutup">
+                                <PathIcon Data="{StaticResource Icon.Close}" Width="14" Height="14" />
+                            </c:SafeButton>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Panel>
+</Window>

@@ -1,0 +1,54 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:SIBASA.ViewModels"
+             xmlns:v="using:SIBASA.Views"
+             x:Class="SIBASA.App"
+             Name="SIBASA"
+             RequestedThemeVariant="Light">
+
+    <!--
+        Pemetaan ViewModel → View (MVVM). Saat sebuah ContentControl berisi ViewModel,
+        Avalonia memakai DataTemplate di bawah untuk menampilkan View yang sesuai.
+    -->
+    <Application.DataTemplates>
+        <DataTemplate DataType="vm:StartupViewModel"><v:StartupView /></DataTemplate>
+        <DataTemplate DataType="vm:LoginViewModel"><v:LoginView /></DataTemplate>
+        <DataTemplate DataType="vm:ShellViewModel"><v:ShellView /></DataTemplate>
+        <DataTemplate DataType="vm:DashboardViewModel"><v:DashboardView /></DataTemplate>
+        <DataTemplate DataType="vm:NasabahViewModel"><v:NasabahView /></DataTemplate>
+        <DataTemplate DataType="vm:JenisSampahViewModel"><v:JenisSampahView /></DataTemplate>
+        <DataTemplate DataType="vm:TransaksiViewModel"><v:TransaksiView /></DataTemplate>
+        <DataTemplate DataType="vm:RiwayatViewModel"><v:RiwayatView /></DataTemplate>
+        <DataTemplate DataType="vm:PenggunaViewModel"><v:PenggunaView /></DataTemplate>
+        <DataTemplate DataType="vm:PengaturanViewModel"><v:PengaturanView /></DataTemplate>
+        <DataTemplate DataType="vm:AksesDitolakViewModel"><v:AksesDitolakView /></DataTemplate>
+    </Application.DataTemplates>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://SIBASA/Styles/Theme.axaml" />
+                <ResourceInclude Source="avares://SIBASA/Styles/Icons.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme>
+            <!-- Warna aksen Fluent disamakan dengan warna utama SIBASA. -->
+            <FluentTheme.Palettes>
+                <ColorPaletteResources x:Key="Light" Accent="#FF2563EB" ErrorText="#FFDC2626" />
+                <ColorPaletteResources x:Key="Dark" Accent="#FF3B82F6" ErrorText="#FFF87171" />
+            </FluentTheme.Palettes>
+        </FluentTheme>
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+        <StyleInclude Source="avares://SIBASA/Styles/Controls.axaml" />
+    </Application.Styles>
+
+    <!-- Menu aplikasi di bar menu macOS. -->
+    <NativeMenu.Menu>
+        <NativeMenu>
+            <NativeMenuItem Header="Tentang SIBASA" Click="OnTentangClick" />
+        </NativeMenu>
+    </NativeMenu.Menu>
+</Application>

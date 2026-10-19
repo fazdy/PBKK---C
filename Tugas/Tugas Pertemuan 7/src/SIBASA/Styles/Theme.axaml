@@ -1,0 +1,132 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--
+        Design tokens SIBASA. Semua warna dipakai lewat {DynamicResource ...} sehingga
+        tampilan langsung berubah saat tema terang/gelap diganti.
+    -->
+    <ResourceDictionary.ThemeDictionaries>
+
+        <!-- ===================== TEMA TERANG ===================== -->
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F1F5F9" />
+            <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="SurfaceAltBrush" Color="#F8FAFC" />
+            <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#F1F5F9" />
+            <SolidColorBrush x:Key="LineBrush" Color="#E2E8F0" />
+            <SolidColorBrush x:Key="LineStrongBrush" Color="#CBD5E1" />
+
+            <SolidColorBrush x:Key="TextPrimaryBrush" Color="#0F172A" />
+            <SolidColorBrush x:Key="TextSecondaryBrush" Color="#475569" />
+            <SolidColorBrush x:Key="TextMutedBrush" Color="#64748B" />
+
+            <SolidColorBrush x:Key="SidebarBrush" Color="#0F1E3D" />
+            <SolidColorBrush x:Key="SidebarHoverBrush" Color="#1B2E57" />
+            <SolidColorBrush x:Key="SidebarActiveBrush" Color="#2563EB" />
+            <SolidColorBrush x:Key="SidebarTextBrush" Color="#CBD5E1" />
+            <SolidColorBrush x:Key="SidebarMutedBrush" Color="#7C8DB0" />
+            <SolidColorBrush x:Key="SidebarLineBrush" Color="#1E3260" />
+
+            <SolidColorBrush x:Key="PrimaryBrush" Color="#2563EB" />
+            <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#1D4ED8" />
+            <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#1E40AF" />
+            <SolidColorBrush x:Key="PrimarySoftBrush" Color="#DBEAFE" />
+            <SolidColorBrush x:Key="PrimaryTextBrush" Color="#1D4ED8" />
+
+            <SolidColorBrush x:Key="SuccessBrush" Color="#16A34A" />
+            <SolidColorBrush x:Key="SuccessSoftBrush" Color="#DCFCE7" />
+            <SolidColorBrush x:Key="SuccessTextBrush" Color="#15803D" />
+
+            <SolidColorBrush x:Key="DangerBrush" Color="#DC2626" />
+            <SolidColorBrush x:Key="DangerHoverBrush" Color="#B91C1C" />
+            <SolidColorBrush x:Key="DangerSoftBrush" Color="#FEE2E2" />
+            <SolidColorBrush x:Key="DangerTextBrush" Color="#B91C1C" />
+
+            <SolidColorBrush x:Key="WarningBrush" Color="#D97706" />
+            <SolidColorBrush x:Key="WarningSoftBrush" Color="#FEF3C7" />
+            <SolidColorBrush x:Key="WarningTextBrush" Color="#B45309" />
+
+            <SolidColorBrush x:Key="NeutralSoftBrush" Color="#F1F5F9" />
+            <SolidColorBrush x:Key="NeutralTextBrush" Color="#475569" />
+
+            <SolidColorBrush x:Key="OverlayBrush" Color="#990F172A" />
+        </ResourceDictionary>
+
+        <!-- ===================== TEMA GELAP ===================== -->
+        <ResourceDictionary x:Key="Dark">
+            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#0B1220" />
+            <SolidColorBrush x:Key="SurfaceBrush" Color="#111A2E" />
+            <SolidColorBrush x:Key="SurfaceAltBrush" Color="#0F172A" />
+            <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#16213A" />
+            <SolidColorBrush x:Key="LineBrush" Color="#1E293B" />
+            <SolidColorBrush x:Key="LineStrongBrush" Color="#334155" />
+
+            <SolidColorBrush x:Key="TextPrimaryBrush" Color="#E2E8F0" />
+            <SolidColorBrush x:Key="TextSecondaryBrush" Color="#94A3B8" />
+            <SolidColorBrush x:Key="TextMutedBrush" Color="#7C8BA1" />
+
+            <SolidColorBrush x:Key="SidebarBrush" Color="#08111F" />
+            <SolidColorBrush x:Key="SidebarHoverBrush" Color="#14213A" />
+            <SolidColorBrush x:Key="SidebarActiveBrush" Color="#2563EB" />
+            <SolidColorBrush x:Key="SidebarTextBrush" Color="#CBD5E1" />
+            <SolidColorBrush x:Key="SidebarMutedBrush" Color="#6B7A99" />
+            <SolidColorBrush x:Key="SidebarLineBrush" Color="#16233D" />
+
+            <SolidColorBrush x:Key="PrimaryBrush" Color="#3B82F6" />
+            <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#2563EB" />
+            <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#1D4ED8" />
+            <SolidColorBrush x:Key="PrimarySoftBrush" Color="#172554" />
+            <SolidColorBrush x:Key="PrimaryTextBrush" Color="#93C5FD" />
+
+            <SolidColorBrush x:Key="SuccessBrush" Color="#22C55E" />
+            <SolidColorBrush x:Key="SuccessSoftBrush" Color="#052E16" />
+            <SolidColorBrush x:Key="SuccessTextBrush" Color="#4ADE80" />
+
+            <SolidColorBrush x:Key="DangerBrush" Color="#EF4444" />
+            <SolidColorBrush x:Key="DangerHoverBrush" Color="#DC2626" />
+            <SolidColorBrush x:Key="DangerSoftBrush" Color="#450A0A" />
+            <SolidColorBrush x:Key="DangerTextBrush" Color="#FCA5A5" />
+
+            <SolidColorBrush x:Key="WarningBrush" Color="#F59E0B" />
+            <SolidColorBrush x:Key="WarningSoftBrush" Color="#422006" />
+            <SolidColorBrush x:Key="WarningTextBrush" Color="#FCD34D" />
+
+            <SolidColorBrush x:Key="NeutralSoftBrush" Color="#1E293B" />
+            <SolidColorBrush x:Key="NeutralTextBrush" Color="#CBD5E1" />
+
+            <SolidColorBrush x:Key="OverlayBrush" Color="#B3000000" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+    <!-- ===================== Token yang sama di kedua tema ===================== -->
+    <LinearGradientBrush x:Key="CardGreenBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#16A34A" Offset="0" />
+        <GradientStop Color="#15803D" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="CardBlueBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#2563EB" Offset="0" />
+        <GradientStop Color="#1D4ED8" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="CardAmberBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#D97706" Offset="0" />
+        <GradientStop Color="#B45309" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="CardPurpleBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#7C3AED" Offset="0" />
+        <GradientStop Color="#6D28D9" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="BrandPanelBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#0F1E3D" Offset="0" />
+        <GradientStop Color="#13305C" Offset="0.55" />
+        <GradientStop Color="#14532D" Offset="1" />
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="BrandGreenBrush" Color="#16A34A" />
+    <SolidColorBrush x:Key="OnColorBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="OnColorSoftBrush" Color="#DDFFFFFF" />
+    <SolidColorBrush x:Key="OnColorChipBrush" Color="#33FFFFFF" />
+
+    <CornerRadius x:Key="ControlRadius">8</CornerRadius>
+    <CornerRadius x:Key="CardRadius">12</CornerRadius>
+    <x:Double x:Key="SidebarWidth">232</x:Double>
+    <x:Double x:Key="FormPanelWidth">360</x:Double>
+</ResourceDictionary>

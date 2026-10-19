@@ -1,0 +1,149 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:SIBASA.Controls"
+             xmlns:vm="using:SIBASA.ViewModels"
+             x:Class="SIBASA.Views.PengaturanView"
+             x:DataType="vm:PengaturanViewModel">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <Grid ColumnDefinitions="*,20,*" Margin="0,0,6,4">
+
+            <!-- ================= Kolom kiri ================= -->
+            <StackPanel Spacing="20">
+                <!-- Tema tampilan -->
+                <Border Classes="card">
+                    <StackPanel Spacing="14">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Border Classes="iconCircle"><PathIcon Data="{StaticResource Icon.Palette}" /></Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Classes="h2" Text="Tampilan" />
+                                <TextBlock Classes="muted" Text="Pilihan tema disimpan dan dipakai lagi saat aplikasi dibuka" />
+                            </StackPanel>
+                        </StackPanel>
+                        <Grid ColumnDefinitions="*,12,*">
+                            <RadioButton Classes="tile" GroupName="tema" IsChecked="{Binding IsLightTheme}">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Border Width="38" Height="38" CornerRadius="10" Background="#F8FAFC"
+                                            BorderBrush="#CBD5E1" BorderThickness="1">
+                                        <PathIcon Data="{StaticResource Icon.Sun}" Width="18" Height="18" Foreground="#D97706" />
+                                    </Border>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Classes="h3" Text="Terang" />
+                                        <TextBlock Text="Latar cerah" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton Grid.Column="2" Classes="tile" GroupName="tema" IsChecked="{Binding IsDarkTheme}">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Border Width="38" Height="38" CornerRadius="10" Background="#0B1220"
+                                            BorderBrush="#334155" BorderThickness="1">
+                                        <PathIcon Data="{StaticResource Icon.Moon}" Width="18" Height="18" Foreground="#93C5FD" />
+                                    </Border>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Classes="h3" Text="Gelap" />
+                                        <TextBlock Text="Nyaman di malam hari" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </RadioButton>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Profil -->
+                <Border Classes="card">
+                    <StackPanel Spacing="14">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Border Classes="iconCircle"><PathIcon Data="{StaticResource Icon.Account}" /></Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Classes="h2" Text="Profil" />
+                                <TextBlock Classes="muted" Text="Akun yang sedang masuk" />
+                            </StackPanel>
+                        </StackPanel>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Border Width="56" Height="56" CornerRadius="28" Background="{DynamicResource PrimaryBrush}">
+                                <TextBlock Text="{Binding InisialText}" Foreground="White" FontSize="20" FontWeight="SemiBold"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center" Spacing="2">
+                                <TextBlock Classes="h3" FontSize="16" Text="{Binding NamaText}" />
+                                <TextBlock Classes="muted" Text="{Binding UsernameText, StringFormat='Username: {0}'}" />
+                                <TextBlock Classes="muted" Text="{Binding RoleText, StringFormat='Peran: {0}'}" />
+                                <TextBlock Classes="muted" Text="{Binding LastLoginText, StringFormat='Login terakhir: {0}'}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tentang aplikasi -->
+                <Border Classes="card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Border Classes="iconCircle"><PathIcon Data="{StaticResource Icon.Info}" /></Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Classes="h2" Text="Tentang aplikasi" />
+                                <TextBlock Classes="muted" Text="{Binding VersiText}" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Classes="label" Text="Teknologi" />
+                            <TextBlock Classes="body" FontSize="13" Text="{Binding TeknologiText}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Classes="label" Text="Lokasi database (SQLite)" />
+                            <SelectableTextBlock Text="{Binding DatabasePath}" FontSize="12.5" TextWrapping="Wrap"
+                                                 Foreground="{DynamicResource TextSecondaryBrush}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Classes="label" Text="Folder log" />
+                            <SelectableTextBlock Text="{Binding LogPath}" FontSize="12.5" TextWrapping="Wrap"
+                                                 Foreground="{DynamicResource TextSecondaryBrush}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Classes="label" Text="Pintasan keyboard" />
+                            <TextBlock Classes="body" FontSize="13" Text="{Binding PintasanText}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ================= Kolom kanan: keamanan ================= -->
+            <Border Grid.Column="2" Classes="card" VerticalAlignment="Top">
+                <StackPanel Spacing="14">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Border Classes="iconCircle"><PathIcon Data="{StaticResource Icon.Key}" /></Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Classes="h2" Text="Ganti password" />
+                            <TextBlock Classes="muted" Text="Minimal 8 karakter, berisi huruf dan angka" />
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Classes="label" Text="Password lama" />
+                        <TextBox Text="{Binding PasswordLama}" PasswordChar="•"
+                                 Classes.invalid="{Binding PasswordLamaError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                        <TextBlock Classes="error" Text="{Binding PasswordLamaError}"
+                                   IsVisible="{Binding PasswordLamaError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Classes="label" Text="Password baru" />
+                        <TextBox Text="{Binding PasswordBaru}" PasswordChar="•"
+                                 Classes.invalid="{Binding PasswordBaruError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                        <TextBlock Classes="error" Text="{Binding PasswordBaruError}"
+                                   IsVisible="{Binding PasswordBaruError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Classes="label" Text="Ulangi password baru" />
+                        <TextBox Text="{Binding Konfirmasi}" PasswordChar="•"
+                                 Classes.invalid="{Binding KonfirmasiError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                        <TextBlock Classes="error" Text="{Binding KonfirmasiError}"
+                                   IsVisible="{Binding KonfirmasiError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                    </StackPanel>
+                    <c:SafeButton Classes="primary" HorizontalAlignment="Left" Command="{Binding GantiPasswordCommand}" AutomationProperties.Name="Simpan password baru">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <PathIcon Data="{StaticResource Icon.Save}" />
+                            <TextBlock Text="Simpan password baru" />
+                        </StackPanel>
+                    </c:SafeButton>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

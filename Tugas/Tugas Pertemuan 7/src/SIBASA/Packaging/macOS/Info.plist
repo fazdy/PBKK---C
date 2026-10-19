@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Metadata bundle macOS (SIBASA.app). Dipakai oleh scripts/publish.sh. -->
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>SIBASA</string>
+    <key>CFBundleDisplayName</key>
+    <string>SIBASA</string>
+    <key>CFBundleIdentifier</key>
+    <string>local.sibasa.desktop</string>
+    <key>CFBundleVersion</key>
+    <string>1.0.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleExecutable</key>
+    <string>SIBASA</string>
+    <key>CFBundleIconFile</key>
+    <string>sibasa.icns</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>13.0</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.business</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>SIBASA - Sistem Informasi Bank Sampah</string>
+</dict>
+</plist>

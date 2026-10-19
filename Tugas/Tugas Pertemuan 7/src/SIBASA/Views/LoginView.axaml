@@ -1,0 +1,126 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:SIBASA.Controls"
+             xmlns:vm="using:SIBASA.ViewModels"
+             x:Class="SIBASA.Views.LoginView"
+             x:DataType="vm:LoginViewModel">
+    <Grid ColumnDefinitions="5*,6*">
+
+        <!-- ================= Panel kiri: identitas produk ================= -->
+        <Border Background="{StaticResource BrandPanelBrush}" ClipToBounds="True">
+            <Panel>
+                <!-- Ikon dekoratif besar di belakang -->
+                <PathIcon Data="{StaticResource Icon.Recycle}" Width="380" Height="380" Opacity="0.06"
+                          Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-90,-70" />
+
+                <DockPanel Margin="48,44">
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="14">
+                        <Border Width="52" Height="52" CornerRadius="15" Background="{StaticResource CardGreenBrush}">
+                            <PathIcon Data="{StaticResource Icon.Recycle}" Width="28" Height="28" Foreground="White" />
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="SIBASA" FontSize="24" FontWeight="Bold" Foreground="White" />
+                            <TextBlock Text="Sistem Informasi Bank Sampah" FontSize="13" Foreground="{StaticResource OnColorSoftBrush}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <TextBlock DockPanel.Dock="Bottom" Text="{Binding VersionText}" FontSize="12"
+                               Foreground="{StaticResource OnColorSoftBrush}" Opacity="0.8" />
+
+                    <StackPanel VerticalAlignment="Center" Spacing="18" MaxWidth="420" HorizontalAlignment="Left">
+                        <TextBlock Text="Setor sampah, jadi saldo." FontSize="32" FontWeight="Bold"
+                                   Foreground="White" TextWrapping="Wrap" />
+                        <TextBlock FontSize="15" Foreground="{StaticResource OnColorSoftBrush}" TextWrapping="Wrap" LineHeight="23"
+                                   Text="Catat setoran warga, hitung nilainya otomatis, dan pantau sampah yang terkumpul dari satu aplikasi." />
+                        <StackPanel Spacing="12" Margin="0,8,0,0">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <PathIcon Data="{StaticResource Icon.Success}" Width="18" Height="18" Foreground="#4ADE80" />
+                                <TextBlock Text="Perhitungan berat × harga per kg otomatis" Foreground="White" FontSize="14" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <PathIcon Data="{StaticResource Icon.Success}" Width="18" Height="18" Foreground="#4ADE80" />
+                                <TextBlock Text="Saldo nasabah selalu konsisten" Foreground="White" FontSize="14" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <PathIcon Data="{StaticResource Icon.Success}" Width="18" Height="18" Foreground="#4ADE80" />
+                                <TextBlock Text="Dashboard statistik dan grafik" Foreground="White" FontSize="14" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </DockPanel>
+            </Panel>
+        </Border>
+
+        <!-- ================= Panel kanan: form login ================= -->
+        <Panel Grid.Column="1">
+            <c:SafeButton Classes="ghost" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,18,18,0"
+                    Command="{Binding ToggleThemeCommand}" ToolTip.Tip="Ganti tema terang/gelap" AutomationProperties.Name="Ganti tema terang/gelap">
+                <Panel>
+                    <PathIcon Data="{StaticResource Icon.Moon}" Width="18" Height="18" IsVisible="{Binding !IsDarkTheme}" />
+                    <PathIcon Data="{StaticResource Icon.Sun}" Width="18" Height="18" IsVisible="{Binding IsDarkTheme}" />
+                </Panel>
+            </c:SafeButton>
+
+            <StackPanel Width="380" Spacing="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Masuk ke akun Anda" Classes="h1" FontSize="26" />
+                    <TextBlock Classes="muted" Text="Gunakan akun yang diberikan pengurus bank sampah." />
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock Classes="label" Text="Username" />
+                    <TextBox Text="{Binding Username}" Watermark="mis. admin" MaxLength="30">
+                        <TextBox.InnerLeftContent>
+                            <PathIcon Data="{StaticResource Icon.Account}" Width="16" Height="16" Margin="10,0,0,0"
+                                      Foreground="{DynamicResource TextMutedBrush}" />
+                        </TextBox.InnerLeftContent>
+                    </TextBox>
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock Classes="label" Text="Password" />
+                    <TextBox Text="{Binding Password}" PasswordChar="•" RevealPassword="{Binding RevealPassword}"
+                             Watermark="Masukkan password">
+                        <TextBox.InnerLeftContent>
+                            <PathIcon Data="{StaticResource Icon.Key}" Width="16" Height="16" Margin="10,0,0,0"
+                                      Foreground="{DynamicResource TextMutedBrush}" />
+                        </TextBox.InnerLeftContent>
+                    </TextBox>
+                    <CheckBox Content="Tampilkan password" IsChecked="{Binding RevealPassword}" Margin="0,6,0,0" FontSize="13" />
+                </StackPanel>
+
+                <!-- Pesan error login -->
+                <Border Classes="banner danger" IsVisible="{Binding HasError}">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <PathIcon Data="{StaticResource Icon.Error}" Width="18" Height="18" VerticalAlignment="Top" />
+                        <TextBlock Grid.Column="1" Margin="10,0,0,0" Text="{Binding ErrorMessage}" TextWrapping="Wrap" FontSize="13" />
+                    </Grid>
+                </Border>
+
+                <!-- IsDefault: tombol Enter menjalankan login. -->
+                <c:SafeButton Classes="primary" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                        MinHeight="42" IsDefault="True" Command="{Binding LoginCommand}">
+                    <TextBlock Text="{Binding LoginButtonText}" FontSize="15" FontWeight="SemiBold" />
+                </c:SafeButton>
+
+                <!-- Akun demo untuk penilaian (bisa dimatikan lewat App:ShowDemoAccounts di appsettings.json) -->
+                <Border Classes="banner info" IsVisible="{Binding ShowDemoAccounts}">
+                    <StackPanel Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <PathIcon Data="{StaticResource Icon.Info}" Width="16" Height="16" />
+                            <TextBlock Text="Akun demo" FontWeight="SemiBold" FontSize="13" />
+                        </StackPanel>
+                        <TextBlock FontSize="12.5" TextWrapping="Wrap"
+                                   Text="Admin: admin / Admin#123 · Petugas: petugas / Petugas#123" />
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <c:SafeButton Classes="secondary" Padding="10,4" MinHeight="30" FontSize="12.5"
+                                    Command="{Binding IsiAkunDemoCommand}" CommandParameter="admin" Content="Isi akun Admin" />
+                            <c:SafeButton Classes="secondary" Padding="10,4" MinHeight="30" FontSize="12.5"
+                                    Command="{Binding IsiAkunDemoCommand}" CommandParameter="petugas" Content="Isi akun Petugas" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Panel>
+    </Grid>
+</UserControl>
