@@ -10,3 +10,4 @@ Repositori untuk tugas-tugas mata kuliah Pemrograman Berbasis Kerangka Kerja (PB
 - **[Tugas Pertemuan 5](./Tugas/Tugas%20Pertemuan%205/)**: Studi Kasus WPF: Student Management System (.NET 8, C#, MVVM, ADO.NET, SQL Server LocalDB)
 - **[Tugas Pertemuan 6](./Tugas/Tugas%20Pertemuan%206/)**: Student Registration Database & Desktop Application (.NET 8, C#, Avalonia UI, ADO.NET, SQL Server)
 - **[Tugas Pertemuan 7](./Tugas/Tugas%20Pertemuan%207/)**: Proyek Persiapan UTS: SIBASA — Sistem Informasi Bank Sampah (.NET 10, C#, Avalonia UI, MVVM, SQLite)
+- **[Tugas Pertemuan 9](./Tugas/Tugas%20Pertemuan%209/)**: Pengenalan Framework CodeIgniter: Tokobuah (Latihan 1), SIAKAD dan Toko Online KampusMart (Latihan 2) (PHP 8.2, CodeIgniter 3.1.13, MySQL/MariaDB, Bootstrap)
