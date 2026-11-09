@@ -1,0 +1,174 @@
+<!--
+Judul postingan: Tugas Pertemuan 10 PBKK (C) | Landing Page ShopEase dengan CodeIgniter 4
+Salin seluruh isi file ini ke Tampilan HTML editor Blogger. Gunakan Pratinjau sebelum publikasi.
+-->
+<div lang="id" style="max-width:900px;margin:0 auto;color:#19213b;background:#fff;font:16px/1.72 system-ui,-apple-system,'Segoe UI',sans-serif;">
+  <div style="padding:28px 24px;border-radius:18px;background:#192453;color:#fff;">
+    <p style="margin:0 0 10px;color:#bfcfff;font-size:12px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;">Pemrograman Berbasis Kerangka Kerja · Kelas C · Pertemuan 10</p>
+    <h2 style="margin:0;color:#fff;font-size:clamp(25px,5vw,40px);line-height:1.15;letter-spacing:-.035em;">Membangun Landing Page ShopEase</h2>
+    <p style="margin:12px 0 0;color:#e3e9ff;">Praktikum routing, controller, dan view dengan CodeIgniter 4</p>
+    <p style="margin:16px 0 0;color:#e3e9ff;font-size:14px;"><strong style="color:#fff;">Faizal Aldy Armiriawan</strong> · NRP 5025231266 · 9 November 2026</p>
+  </div>
+
+  <p style="padding:14px 16px;background:#eef3ff;border-left:4px solid #3657ca;border-radius:6px;margin:18px 0 0;">
+    <strong>Hasil praktikum.</strong> ShopEase memiliki Beranda, Katalog, Tentang, dan Kontak. Beranda menampilkan empat kategori dan delapan produk demo yang dibagi menjadi koleksi terbaru dan terlaris. Katalog dapat ditelusuri dengan kata kunci dan kategori.
+  </p>
+
+  <p style="margin:14px 0 0;"><strong>Kode sumber dan laporan GitHub.</strong> <a href="https://github.com/fazdy/PBKK---C/tree/main/Tugas/Tugas%20Pertemuan%2010" style="color:#294dc7;font-weight:700;">Tugas Pertemuan 10 — ShopEase</a></p>
+
+  <h2 style="margin:32px 0 8px;color:#192453;">1. Pendahuluan</h2>
+  <p>Pada pertemuan ini, saya membuat halaman awal ShopEase, sebuah studi kasus toko online berbasis CodeIgniter 4. Pengunjung perlu mengetahui jenis produk yang tersedia dan menemukan katalog dari halaman pertama. Karena itu, saya menempatkan banner dan tombol menuju katalog di bagian atas, lalu menampilkan kategori serta produk pilihan di bawahnya.</p>
+  <p>Tujuan praktikum ini adalah menghubungkan URL ke method yang tepat, menyiapkan data pada controller, dan merender halaman dengan view. Saya juga menggunakan satu layout bersama agar navigasi dan footer konsisten di seluruh halaman.</p>
+  <p>Ruang lingkup pengerjaan mengikuti tugas Pertemuan 10 yang diberikan di kelas dan bagian <em>Routing, Controller, dan View</em> pada Hands-On Lab. Kebutuhan toko lengkap seperti akun, keranjang, checkout, pembayaran, pengiriman, dan panel admin merupakan modul lanjutan dalam PRD.</p>
+
+  <h2 style="margin:32px 0 8px;color:#192453;">2. Analisis kebutuhan dari PRD</h2>
+  <div style="overflow-x:auto;">
+    <table style="width:100%;min-width:420px;border-collapse:collapse;font-size:14px;">
+      <thead style="background:#192453;color:#fff;">
+        <tr><th scope="col" style="padding:9px;text-align:left;">Kebutuhan</th><th scope="col" style="padding:9px;text-align:left;">Implementasi ShopEase</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row" style="padding:9px;text-align:left;border-bottom:1px solid #dce4f3;">Banner dan ajakan membuka katalog</th><td style="padding:9px;border-bottom:1px solid #dce4f3;">Banner sorotan Headphone Aura X1 dengan tombol <strong>Lihat katalog</strong> menuju <code>/catalog</code>.</td></tr>
+        <tr><th scope="row" style="padding:9px;text-align:left;border-bottom:1px solid #dce4f3;">Kategori produk</th><td style="padding:9px;border-bottom:1px solid #dce4f3;">Elektronik, Fesyen, Rumah Tangga, dan Aksesori. Setiap kartu membuka katalog dengan kategori tersebut terpilih.</td></tr>
+        <tr><th scope="row" style="padding:9px;text-align:left;border-bottom:1px solid #dce4f3;">Produk terbaru dan terlaris</th><td style="padding:9px;border-bottom:1px solid #dce4f3;">Dua bagian terpisah, masing-masing empat produk dengan ilustrasi, deskripsi, dan harga rupiah. Label terlaris berasal dari pengelompokan data demo.</td></tr>
+        <tr><th scope="row" style="padding:9px;text-align:left;border-bottom:1px solid #dce4f3;">Katalog dan navigasi</th><td style="padding:9px;border-bottom:1px solid #dce4f3;">Katalog demo dengan pencarian dan filter kategori. Menu aktif ditandai pada setiap halaman.</td></tr>
+        <tr><th scope="row" style="padding:9px;text-align:left;border-bottom:1px solid #dce4f3;">About dan Contact dari HOL</th><td style="padding:9px;border-bottom:1px solid #dce4f3;">Tentang menjelaskan konsep toko dan tiga aktor PRD. Kontak menyediakan alamat email contoh dan FAQ.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Fitur katalog pada tugas ini mendemonstrasikan tampilan daftar, pencarian, dan filter dari FR-04. Data produk diambil dari array PHP agar praktikum dapat berfokus pada alur routing, controller, dan view.</p>
+
+  <h2 style="margin:32px 0 8px;color:#192453;">3. Persiapan dan cara menjalankan</h2>
+  <ul style="padding-left:23px;">
+    <li><strong>Perangkat.</strong> MacBook Pro 2020 Intel Core i5, RAM 8 GB, penyimpanan 256 GB, macOS Sequoia 15.8.2.</li>
+    <li><strong>Runtime.</strong> PHP 8.4.12 yang sudah tersedia di Terminal. CodeIgniter 4.7.6 memerlukan PHP 8.2 atau lebih baru dan ekstensi <code>intl</code> serta <code>mbstring</code>.</li>
+    <li><strong>Framework dan tampilan.</strong> CodeIgniter 4.7.6 dari paket instalasi manual dan Bootstrap 5.3.3 dari aset lokal. CSS khusus mengatur warna, tipografi, dan susunan halaman. SVG lokal digunakan untuk logo serta ilustrasi produk.</li>
+    <li><strong>Editor dan browser.</strong> Visual Studio Code untuk membaca atau mengubah kode, serta Safari atau Chrome untuk membuka aplikasi.</li>
+  </ul>
+  <p>Folder proyek sudah menyertakan <code>system/</code> dan aset Bootstrap, sehingga demo dapat dijalankan langsung dengan PHP. Dari direktori repositori <code>PBKK---C</code>, buka Terminal dan jalankan perintah berikut.</p>
+  <pre style="margin:12px 0;padding:14px 16px;border-radius:10px;background:#111b38;color:#f0f4ff;overflow:auto;font:13px/1.6 ui-monospace,Menlo,monospace;"><code>cd "Tugas/Tugas Pertemuan 10/shopease"
+php -v
+php --ri intl
+php --ri mbstring
+php spark routes
+php spark serve</code></pre>
+  <p>Selama server aktif, buka <code>http://localhost:8080/</code> di browser. Tekan <kbd>Control</kbd>+<kbd>C</kbd> di Terminal untuk menghentikannya. Gunakan server pengembangan ini untuk demonstrasi lokal.</p>
+  <p>Jika port 8080 sedang dipakai, buat <code>.env</code> dari <code>env</code> apabila belum ada. Atur <code>app.baseURL = 'http://localhost:8081/'</code>, jalankan <code>php spark serve --port 8081</code>, lalu buka <code>http://localhost:8081/</code>.</p>
+
+  <h2 style="margin:32px 0 8px;color:#192453;">4. Struktur proyek</h2>
+  <p>Berkas utama pengerjaan berada di folder <code>shopease/</code>. Di bawah ini adalah bagian yang dipakai untuk tugas.</p>
+  <pre style="margin:12px 0;padding:14px 16px;border-radius:10px;background:#111b38;color:#f0f4ff;overflow:auto;font:13px/1.6 ui-monospace,Menlo,monospace;"><code>shopease/
+  app/
+    Config/Routes.php
+    Config/App.php
+    Controllers/HomeController.php
+    Models/DemoCatalog.php
+    Views/
+      layouts/store.php
+      frontend/
+        home.php
+        catalog.php
+        about.php
+        contact.php
+        partials/product_grid.php
+        partials/icons.php
+  public/
+    index.php
+    assets/css/shopease.css
+    assets/img/
+    assets/vendor/bootstrap/
+  system/
+  writable/
+  spark</code></pre>
+  <p><code>public/index.php</code> adalah titik masuk aplikasi web. Direktori <code>app/</code> berisi konfigurasi dan kode ShopEase. Aset yang dibaca browser berada di <code>public/</code>, kode inti CodeIgniter di <code>system/</code>, dan berkas runtime di <code>writable/</code>.</p>
+
+  <h2 style="margin:32px 0 8px;color:#192453;">5. Implementasi routing, controller, dan view</h2>
+  <h3 style="margin:20px 0 5px;color:#243b87;">5.1 Routing</h3>
+  <p>Di <code>app/Config/Routes.php</code>, saya mengganti rute halaman sambutan bawaan dengan empat rute <code>GET</code>. Alias seperti <code>catalog</code> digunakan oleh <code>url_to()</code> untuk membangun tautan dari layout dan tombol. Nilai <code>indexPage</code> di <code>app/Config/App.php</code> dikosongkan agar tautan menggunakan URL seperti <code>/about</code>.</p>
+  <pre style="margin:12px 0;padding:14px 16px;border-radius:10px;background:#111b38;color:#f0f4ff;overflow:auto;font:13px/1.6 ui-monospace,Menlo,monospace;"><code>$routes-&gt;get('/', 'HomeController::index', ['as' =&gt; 'home']);
+$routes-&gt;get('catalog', 'HomeController::catalog', ['as' =&gt; 'catalog']);
+$routes-&gt;get('about', 'HomeController::about', ['as' =&gt; 'about']);
+$routes-&gt;get('contact', 'HomeController::contact', ['as' =&gt; 'contact']);</code></pre>
+  <div style="overflow-x:auto;">
+    <table style="width:100%;min-width:490px;border-collapse:collapse;font-size:14px;">
+      <thead style="background:#192453;color:#fff;">
+        <tr><th scope="col" style="padding:9px;text-align:left;">URL</th><th scope="col" style="padding:9px;text-align:left;">Method controller</th><th scope="col" style="padding:9px;text-align:left;">View</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>/</code></td><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>HomeController::index</code></td><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>frontend/home.php</code></td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>/catalog</code></td><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>HomeController::catalog</code></td><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>frontend/catalog.php</code></td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>/about</code></td><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>HomeController::about</code></td><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>frontend/about.php</code></td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>/contact</code></td><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>HomeController::contact</code></td><td style="padding:9px;border-bottom:1px solid #dce4f3;"><code>frontend/contact.php</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin:20px 0 5px;color:#243b87;">5.2 Controller dan sumber data</h3>
+  <p><code>HomeController</code> mewarisi <code>BaseController</code>. Method <code>index()</code> membaca kategori dan produk dari <code>DemoCatalog</code>, mengambil produk untuk banner, lalu membagi data menurut koleksi. Method <code>about()</code> dan <code>contact()</code> memasok judul dan penanda halaman aktif. Method <code>contact()</code> juga mengirim alamat email demo ke view.</p>
+  <pre style="margin:12px 0;padding:14px 16px;border-radius:10px;background:#111b38;color:#f0f4ff;overflow:auto;font:13px/1.6 ui-monospace,Menlo,monospace;"><code>public function contact(): string
+{
+    return view('frontend/contact', [
+        'title' =&gt; 'Kontak | ShopEase',
+        'page' =&gt; 'contact',
+        'email' =&gt; 'halo@shopease.example',
+    ]);
+}</code></pre>
+  <p>Pada <code>catalog()</code>, controller membaca parameter <code>q</code> dan <code>kategori</code> dari permintaan <code>GET</code>. Kata kunci dibatasi 80 karakter. Kategori dicocokkan dengan daftar slug yang tersedia. <code>mb_stripos()</code> mencari kata kunci pada nama dan deskripsi tanpa membedakan kapitalisasi. Jika keduanya diisi, produk harus memenuhi kedua kondisi.</p>
+  <pre style="margin:12px 0;padding:14px 16px;border-radius:10px;background:#111b38;color:#f0f4ff;overflow:auto;font:13px/1.6 ui-monospace,Menlo,monospace;"><code>$matchesCategory = $category === '' || $product['category'] === $category;
+$searchText = $product['name'] . ' ' . $product['description'];
+
+return $matchesCategory
+    &amp;&amp; ($query === '' || mb_stripos($searchText, $query, 0, 'UTF-8') !== false);</code></pre>
+  <p><code>DemoCatalog</code> adalah kelas data contoh yang memuat empat kategori dan delapan produk. Setiap produk mempunyai nama, deskripsi, kategori, harga, berkas ilustrasi, dan penanda koleksi. Pada aplikasi penuh, data ini dapat berasal dari model yang membaca tabel produk dan kategori di MySQL.</p>
+
+  <h3 style="margin:20px 0 5px;color:#243b87;">5.3 View, layout, dan desain responsif</h3>
+  <p>Setiap halaman menggunakan <code>extend('layouts/store')</code> dan menaruh isi utamanya di section <code>content</code>. Layout menyisipkan section tersebut melalui <code>renderSection('content')</code>. Judul, navigasi, footer, dan pemanggilan CSS ditulis sekali. Beranda dan katalog juga menggunakan ulang <code>product_grid.php</code> untuk kartu produk.</p>
+  <pre style="margin:12px 0;padding:14px 16px;border-radius:10px;background:#111b38;color:#f0f4ff;overflow:auto;font:13px/1.6 ui-monospace,Menlo,monospace;"><code>&lt;title&gt;&lt;?= esc($title) ?&gt;&lt;/title&gt;
+&lt;main id="main-content" tabindex="-1"&gt;
+    &lt;?= $this-&gt;renderSection('content') ?&gt;
+&lt;/main&gt;</code></pre>
+  <p>Grid Bootstrap <code>row-cols-2 row-cols-lg-4</code> membuat kartu menjadi dua kolom pada layar sempit dan empat kolom mulai dari ukuran <code>lg</code>. CSS menumpuk teks serta ilustrasi banner pada layar sempit. Form katalog memiliki label pada setiap input. Navigasi aktif ditandai dengan <code>aria-current</code> dan FAQ menggunakan elemen HTML <code>details</code>.</p>
+  <p><code>base_url()</code> membentuk alamat aset lokal. <code>esc()</code> mengubah karakter khusus pada data keluaran agar browser membacanya sebagai teks, termasuk saat nilai pencarian ditampilkan kembali. Harga disusun dengan pemisah ribuan titik melalui <code>number_format()</code>.</p>
+
+  <h2 style="margin:32px 0 8px;color:#192453;">6. Alur dan hasil demonstrasi</h2>
+  <p style="padding:13px 16px;background:#eef3ff;border-radius:8px;"><strong>Alur permintaan</strong><br>Browser meminta URL → CodeIgniter mencocokkan rute → controller menyiapkan data → view mengisi layout → browser menerima HTML.</p>
+  <ol style="padding-left:23px;">
+    <li>Buka Beranda. Banner menampilkan ilustrasi headphone dengan tombol <strong>Lihat katalog</strong>. Di bawahnya terdapat empat kategori, empat produk terbaru, dan empat produk terlaris.</li>
+    <li>Klik kategori <strong>Elektronik</strong>. Alamat menjadi <code>/catalog?kategori=elektronik</code> dan kartu Headphone Aura X1 serta Keyboard Nova 68 ditampilkan.</li>
+    <li>Klik <strong>Reset pencarian</strong>, masukkan <code>lampu</code>, lalu tekan <strong>Cari</strong>. Hasilnya adalah Lampu Meja Luma. Untuk kata kunci yang tidak cocok, katalog menampilkan pesan dan tombol kembali ke semua produk.</li>
+    <li>Buka <strong>Tentang</strong> untuk melihat peran customer, administrator, dan operator toko dalam PRD. Buka <strong>Kontak</strong> untuk melihat informasi email contoh dan FAQ.</li>
+  </ol>
+  <p>Pada desktop, teks dan ilustrasi banner berdampingan. Pada pratinjau 390 piksel, isi banner dan form katalog tersusun vertikal. Pratinjau Kontak pada 320 piksel menempatkan kartu email dan FAQ dalam satu kolom.</p>
+
+  <h2 style="margin:32px 0 8px;color:#192453;">7. Pengujian</h2>
+  <p>Sintaks file PHP yang dibuat atau diubah diperiksa dengan <code>php -l</code>. Daftar rute diperiksa dengan <code>php spark routes</code>. Karena sesi pengujian membatasi pembukaan port lokal, respons <code>public/index.php</code> diuji melalui PHP CGI 8.4.12. Tampilan diperiksa di Safari dari HTML hasil respons tersebut.</p>
+  <div style="overflow-x:auto;">
+    <table style="width:100%;min-width:490px;border-collapse:collapse;font-size:14px;">
+      <thead style="background:#192453;color:#fff;">
+        <tr><th scope="col" style="padding:9px;text-align:left;">Skenario</th><th scope="col" style="padding:9px;text-align:left;">Hasil teramati</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;">Empat URL utama</td><td style="padding:9px;border-bottom:1px solid #dce4f3;">HTTP 200. Tiap halaman mempunyai judul dan tautan aktif yang sesuai.</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;">Beranda dan katalog awal</td><td style="padding:9px;border-bottom:1px solid #dce4f3;">Empat tautan kategori dan delapan kartu di beranda. Katalog awal menampilkan delapan produk.</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;">Filter Elektronik dan pencarian <code>lAmPu</code></td><td style="padding:9px;border-bottom:1px solid #dce4f3;">Filter menghasilkan dua produk. Pencarian menghasilkan Lampu Meja Luma.</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;">Kata kunci <code>headphone</code> dan Elektronik</td><td style="padding:9px;border-bottom:1px solid #dce4f3;">Gabungan pencarian dan filter menghasilkan satu produk.</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;">Hasil kosong dan parameter di luar format</td><td style="padding:9px;border-bottom:1px solid #dce4f3;">Pesan “Produk belum ditemukan” muncul. Kategori yang tidak dikenal dan nilai berbentuk array kembali ke pilihan awal.</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;">Masukan yang menyerupai tag HTML</td><td style="padding:9px;border-bottom:1px solid #dce4f3;">Masukan kembali sebagai teks dan tidak membuat elemen skrip.</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;">URL yang tidak terdaftar dan <code>POST /contact</code></td><td style="padding:9px;border-bottom:1px solid #dce4f3;">Keduanya menghasilkan HTTP 404.</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid #dce4f3;">Pratinjau desktop dan layar sempit</td><td style="padding:9px;border-bottom:1px solid #dce4f3;">Beranda diperiksa di desktop dan 390 piksel. Katalog diperiksa pada 390 piksel dan Kontak pada 320 piksel.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 style="margin:32px 0 8px;color:#192453;">8. Kesimpulan</h2>
+  <p>ShopEase sudah memiliki halaman awal sesuai kebutuhan homepage pada studi kasus. Empat rute terhubung ke method dan view yang sesuai. Dengan memisahkan sumber data, controller, dan layout, saya dapat menambah atau mengubah isi katalog di satu tempat sambil memakai kembali tampilan yang sama. Demo ini mencakup tahap penelusuran produk dengan data contoh dan menjadi dasar bagi modul transaksi dalam PRD.</p>
+
+  <h2 style="margin:32px 0 8px;color:#192453;">9. Referensi</h2>
+  <ol style="padding-left:23px;">
+    <li>Materi Pertemuan 10. <em>Studi Kasus ShopEase CodeIgniter 4</em>, bagian 4.1 dan 6. Berkas <code>Studi_Kasus_ShopEase_CodeIgniter4.docx.pdf</code>.</li>
+    <li>Materi Pertemuan 10. <em>Hands-On Lab ShopEase</em>, bagian 6 mengenai Routing, Controller, dan View. Berkas <code>HOL_ShopEase_CodeIgniter4.docx.pdf</code>.</li>
+    <li>Fajar Baskoro. <a href="https://fajarbaskoro.blogspot.com/2021/05/mvc-dan-routing-ci.html">MVC dan Routing CI</a>.</li>
+    <li>CodeIgniter User Guide. <a href="https://codeigniter4.github.io/userguide/intro/requirements.html">Server Requirements</a>, <a href="https://codeigniter4.github.io/userguide/installation/installing_manual.html">Manual Installation</a>, <a href="https://codeigniter4.github.io/userguide/incoming/routing.html">URI Routing</a>, dan <a href="https://codeigniter4.github.io/userguide/outgoing/view_layouts.html">View Layouts</a>.</li>
+    <li>Bootstrap 5.3 Documentation. <a href="https://getbootstrap.com/docs/5.3/layout/grid/">Grid System</a>.</li>
+  </ol>
+</div>
