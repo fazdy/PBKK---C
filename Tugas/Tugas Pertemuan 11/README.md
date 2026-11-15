@@ -4,7 +4,7 @@
 **NRP:** 5025231266<br>
 **Kelas:** PBKK (C)
 
-Implementasi **Hands-On Lab Authentication System CodeIgniter 4**: registrasi customer, login, session, pembatasan akses customer/admin/operator, dan logout. Halaman publik ShopEase dari Pertemuan 10 tetap terintegrasi dengan navigasi akun.
+Tugas ini menerapkan alur autentikasi dari materi **Hands-On Lab Authentication System CodeIgniter 4**. Cakupannya meliputi registrasi customer, login, session, pembatasan akses customer/admin/operator, dan logout. Halaman publik ShopEase dari Pertemuan 10 tetap terintegrasi dengan navigasi akun.
 
 ## Mulai di MacBook Pro 2020 Intel
 
@@ -42,7 +42,7 @@ Screenshot menggunakan customer tambahan `faizal.demo@shopease.test` yang dibuat
 
 ## Cakupan materi
 
-Dokumen khusus **Hands-On_Lab_Authentication_System_CodeIgniter_4.docx.pdf** menjadi acuan praktikum. PRD, HOL umum, studi kasus, dan lima infografis menjadi konteks arsitektur/roadmap. Nomor “Pertemuan 11” pada nama folder adalah nomor pengumpulan tugas; roadmap generik dalam dokumen memiliki penomoran modul tersendiri.
+Dokumen khusus **Hands-On_Lab_Authentication_System_CodeIgniter_4.docx.pdf** menjadi acuan pengerjaan Tugas Pertemuan 11. PRD, HOL umum, studi kasus, dan lima infografis menjadi konteks arsitektur/roadmap. Nomor “Pertemuan 11” pada nama folder adalah nomor pengumpulan tugas; roadmap generik dalam dokumen memiliki penomoran modul tersendiri.
 
 | Bagian | Implementasi |
 |---|---|
