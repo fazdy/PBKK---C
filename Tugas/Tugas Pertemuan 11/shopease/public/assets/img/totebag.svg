@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320">
+  <defs>
+    <linearGradient id="fabric" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2dfc3"/><stop offset=".54" stop-color="#d5b894"/><stop offset="1" stop-color="#b08d69"/></linearGradient>
+    <radialGradient id="shadow"><stop stop-color="#513d4d" stop-opacity=".23"/><stop offset="1" stop-color="#513d4d" stop-opacity="0"/></radialGradient>
+    <pattern id="weave" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 0v5m0-5h5" fill="none" stroke="#fff6e2" stroke-opacity=".33" stroke-width=".8"/></pattern>
+  </defs>
+  <ellipse cx="208" cy="274" rx="114" ry="21" fill="url(#shadow)"/>
+  <g transform="rotate(-7 210 160)">
+    <path d="M165 142V93c0-27 15-44 36-44s36 17 36 44v49" fill="none" stroke="#a48266" stroke-width="11" stroke-linecap="round"/>
+    <path d="M178 139V90c0-28 15-45 36-45s36 17 36 45v49" fill="none" stroke="#ccad8b" stroke-width="11" stroke-linecap="round"/>
+    <path d="M128 129h153l-14 128c-1 8-7 12-15 12h-99c-8 0-15-5-16-14Z" fill="url(#fabric)" stroke="#a28166" stroke-width="2.5"/>
+    <path d="M128 130h153l-14 126c-1 8-7 13-15 13h-99c-8 0-15-5-16-14Z" fill="url(#weave)"/>
+    <path d="M140 144l12 107c1 6 5 8 9 8h87c5 0 9-3 10-8l12-107M130 145h149" fill="none" stroke="#9e7e62" stroke-width="1.7" stroke-dasharray="2 4"/>
+    <rect x="179" y="183" width="51" height="42" rx="6" fill="#576883"/>
+    <path d="M194 203c5 7 15 7 20 0" fill="none" stroke="#f9e7c9" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+</svg>

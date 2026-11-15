@@ -1,0 +1,6 @@
+{
+  "name": "shopease-auth-browser-checks",
+  "private": true,
+  "scripts": { "screenshots": "node capture.cjs" },
+  "devDependencies": { "playwright": "1.62.1" }
+}

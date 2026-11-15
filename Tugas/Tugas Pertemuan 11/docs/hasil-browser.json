@@ -1,0 +1,196 @@
+{
+  "mode": "Chrome + real HTTP php spark serve / MySQLi / isolated database",
+  "screenshots": [
+    {
+      "name": "01-registrasi.png",
+      "url": "http://127.0.0.1:8082/register",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "02-validasi-registrasi.png",
+      "url": "http://127.0.0.1:8082/register",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "03-registrasi-berhasil.png",
+      "url": "http://127.0.0.1:8082/login",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "04-login-ditolak.png",
+      "url": "http://127.0.0.1:8082/login",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "05-beranda-customer.png",
+      "url": "http://127.0.0.1:8082/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "06-profil-customer.png",
+      "url": "http://127.0.0.1:8082/account",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "07-akses-ditolak.png",
+      "url": "http://127.0.0.1:8082/admin",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "10-logout.png",
+      "url": "http://127.0.0.1:8082/login?logout=1",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "08-dashboard-admin.png",
+      "url": "http://127.0.0.1:8082/admin",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "09-dashboard-operator.png",
+      "url": "http://127.0.0.1:8082/operator",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "11-login-mobile.png",
+      "url": "http://127.0.0.1:8082/login",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "name": "12-registrasi-mobile.png",
+      "url": "http://127.0.0.1:8082/register",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Konfirmasi berbeda menampilkan validasi",
+      "passed": true
+    },
+    {
+      "name": "Registrasi redirect ke login",
+      "passed": true
+    },
+    {
+      "name": "Login salah ditolak",
+      "passed": true
+    },
+    {
+      "name": "Customer masuk ke beranda",
+      "passed": true
+    },
+    {
+      "name": "Nama tampil di profil",
+      "passed": true
+    },
+    {
+      "name": "Customer ditolak dari admin dengan 403",
+      "passed": true
+    },
+    {
+      "name": "Admin menuju dashboard",
+      "passed": true
+    },
+    {
+      "name": "Operator menuju dashboard",
+      "passed": true
+    },
+    {
+      "name": "Tombol lihat password berfungsi",
+      "passed": true
+    },
+    {
+      "name": "Login mobile tanpa overflow horizontal",
+      "passed": true
+    },
+    {
+      "name": "Registrasi mobile tanpa overflow horizontal",
+      "passed": true
+    },
+    {
+      "name": "Registrasi 320 px tanpa overflow horizontal",
+      "passed": true
+    },
+    {
+      "name": "Tidak ada kesalahan JavaScript",
+      "passed": true
+    },
+    {
+      "name": "Tidak ada respons HTTP 500",
+      "passed": true
+    }
+  ],
+  "redirects": [
+    {
+      "from": "http://127.0.0.1:8082/register",
+      "status": 303
+    },
+    {
+      "from": "http://127.0.0.1:8082/login",
+      "status": 303
+    },
+    {
+      "from": "http://127.0.0.1:8082/logout",
+      "status": 303
+    },
+    {
+      "from": "http://127.0.0.1:8082/login",
+      "status": 303
+    },
+    {
+      "from": "http://127.0.0.1:8082/logout",
+      "status": 303
+    },
+    {
+      "from": "http://127.0.0.1:8082/login",
+      "status": 303
+    },
+    {
+      "from": "http://127.0.0.1:8082/logout",
+      "status": 303
+    }
+  ],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "browserVersion": "157.0.8103.78",
+  "phpVersion": "8.4.12",
+  "playwrightVersion": "1.62.1",
+  "database": "MySQLi",
+  "executedAt": "2026-11-15T15:14:24.298Z"
+}

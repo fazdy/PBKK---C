@@ -1,0 +1,66 @@
+{
+  "executedAt": "2026-11-15T15:18:05.471380+00:00",
+  "source": "Chrome via HTTP php spark serve + MySQL 9.3.0; see hasil-browser.json",
+  "files": [
+    {
+      "name": "01-registrasi.png",
+      "sha256": "b7a0889bc5dce03f0e14101e3606235780762cb0e5431d78ad64f3912a434371",
+      "bytes": 126570
+    },
+    {
+      "name": "02-validasi-registrasi.png",
+      "sha256": "f965c5ecbe5b749250ddb0b4a54ce818c7531d749279ebcb771cf400dc9fbcda",
+      "bytes": 134760
+    },
+    {
+      "name": "03-registrasi-berhasil.png",
+      "sha256": "a0b243e7bad23b84aede54447bd8d23e1124efb285ac4038bf0e4da014e19c47",
+      "bytes": 119696
+    },
+    {
+      "name": "04-login-ditolak.png",
+      "sha256": "4f0d2606e5b707aeb2ca3ab15b2c4c86f0f13c51e5cd4e9cb5e4ce0f5d0cc18a",
+      "bytes": 122765
+    },
+    {
+      "name": "05-beranda-customer.png",
+      "sha256": "1beba7c80e62b7ae26e38f60e300317d0ef760343b76f04f3dcfb6b0d58dc747",
+      "bytes": 710121
+    },
+    {
+      "name": "06-profil-customer.png",
+      "sha256": "3660fa7868ecc1484464f2153abccb5ad37e4599b2baedb7b2f50d157046a176",
+      "bytes": 97567
+    },
+    {
+      "name": "07-akses-ditolak.png",
+      "sha256": "d730ef3163d7d25e462d43ddddd8542637cbce1a36b7de178822a020614da5eb",
+      "bytes": 52218
+    },
+    {
+      "name": "08-dashboard-admin.png",
+      "sha256": "0051689406ca30e1ef6e058889d5e7983f54b6dcfafb12d6de85a43d006910e1",
+      "bytes": 100294
+    },
+    {
+      "name": "09-dashboard-operator.png",
+      "sha256": "797ccd3bbd5f81569f57f3e278092ef5cc5e2fa04388bdb5cfa6b7fcacf94f68",
+      "bytes": 110662
+    },
+    {
+      "name": "10-logout.png",
+      "sha256": "b11c688f8ddec5aebf1412bc7b571d3cacb7260a928a4ece374d18f80b84d173",
+      "bytes": 119242
+    },
+    {
+      "name": "11-login-mobile.png",
+      "sha256": "8b5824c4fcc839e06734e388bdaa8fc4b53d26a99afa666cb1e58f12d18fb8b2",
+      "bytes": 49946
+    },
+    {
+      "name": "12-registrasi-mobile.png",
+      "sha256": "28eeed1e80d9762d8a4fd96fce45046fe8746004159337f70e6c7ddc8d843cf2",
+      "bytes": 60068
+    }
+  ]
+}

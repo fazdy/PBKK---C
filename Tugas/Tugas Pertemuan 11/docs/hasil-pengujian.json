@@ -1,0 +1,198 @@
+{
+  "executed_at": "2026-11-15T15:16:10.455324+00:00",
+  "mode": "PHP CGI integration / SQLite3 / isolated temporary writable",
+  "php": "8.4.12",
+  "total": 47,
+  "passed": 47,
+  "failed": 0,
+  "results": [
+    {
+      "name": "GET / merespons 200",
+      "passed": true
+    },
+    {
+      "name": "GET /catalog merespons 200",
+      "passed": true
+    },
+    {
+      "name": "GET /about merespons 200",
+      "passed": true
+    },
+    {
+      "name": "GET /contact merespons 200",
+      "passed": true
+    },
+    {
+      "name": "GET /register merespons 200",
+      "passed": true
+    },
+    {
+      "name": "GET /login merespons 200",
+      "passed": true
+    },
+    {
+      "name": "URL tidak terdaftar merespons 404",
+      "passed": true
+    },
+    {
+      "name": "Tamu diarahkan ke login",
+      "passed": true
+    },
+    {
+      "name": "Password pendek ditolak",
+      "passed": true
+    },
+    {
+      "name": "Konfirmasi password berbeda ditolak",
+      "passed": true
+    },
+    {
+      "name": "Format email invalid ditolak",
+      "passed": true
+    },
+    {
+      "name": "Telepon invalid ditolak",
+      "passed": true
+    },
+    {
+      "name": "Batas password 72 byte ditegakkan",
+      "passed": true
+    },
+    {
+      "name": "Registrasi valid berhasil dan redirect login",
+      "passed": true
+    },
+    {
+      "name": "Normalisasi email sebelum simpan",
+      "passed": true
+    },
+    {
+      "name": "Manipulasi role registrasi tetap customer",
+      "passed": true
+    },
+    {
+      "name": "Password tersimpan sebagai hash",
+      "passed": true
+    },
+    {
+      "name": "Timestamp registrasi tersimpan",
+      "passed": true
+    },
+    {
+      "name": "Email duplikat dengan huruf besar/spasi ditolak",
+      "passed": true
+    },
+    {
+      "name": "Password tidak diisi kembali di HTML",
+      "passed": true
+    },
+    {
+      "name": "Input array tidak menyebabkan error 500",
+      "passed": true
+    },
+    {
+      "name": "POST tanpa CSRF ditolak",
+      "passed": true
+    },
+    {
+      "name": "Password salah ditolak",
+      "passed": true
+    },
+    {
+      "name": "Email tidak dikenal mendapat pesan generik sama",
+      "passed": true
+    },
+    {
+      "name": "Login customer diarahkan ke beranda",
+      "passed": true
+    },
+    {
+      "name": "Session ID berubah setelah login",
+      "passed": true
+    },
+    {
+      "name": "Profil customer dapat dibuka",
+      "passed": true
+    },
+    {
+      "name": "Customer ditolak masuk admin",
+      "passed": true
+    },
+    {
+      "name": "Customer ditolak masuk operator",
+      "passed": true
+    },
+    {
+      "name": "GET logout tidak mengakhiri sesi",
+      "passed": true
+    },
+    {
+      "name": "Logout POST berhasil",
+      "passed": true
+    },
+    {
+      "name": "Akses setelah logout diarahkan ke login",
+      "passed": true
+    },
+    {
+      "name": "Session sebelum login tidak dapat dipakai ulang",
+      "passed": true
+    },
+    {
+      "name": "Login admin diarahkan ke dashboard",
+      "passed": true
+    },
+    {
+      "name": "Dashboard admin menampilkan data nyata users",
+      "passed": true
+    },
+    {
+      "name": "Nama pengguna di-escape untuk mencegah XSS",
+      "passed": true
+    },
+    {
+      "name": "Halaman akun tidak di-cache",
+      "passed": true
+    },
+    {
+      "name": "Admin tidak otomatis mendapat role operator",
+      "passed": true
+    },
+    {
+      "name": "Session admin setelah logout tidak dapat dipakai ulang",
+      "passed": true
+    },
+    {
+      "name": "Login operator diarahkan ke dashboard",
+      "passed": true
+    },
+    {
+      "name": "Dashboard operator dapat dibuka",
+      "passed": true
+    },
+    {
+      "name": "Operator ditolak masuk admin",
+      "passed": true
+    },
+    {
+      "name": "Operator ditolak masuk profil customer",
+      "passed": true
+    },
+    {
+      "name": "Perubahan role berlaku pada request berikutnya",
+      "passed": true
+    },
+    {
+      "name": "Akun dihapus kehilangan akses sesi",
+      "passed": true
+    },
+    {
+      "name": "Login berulang dibatasi dengan HTTP 429",
+      "passed": true
+    },
+    {
+      "name": "Database memiliki index email unik",
+      "passed": true
+    }
+  ]
+}

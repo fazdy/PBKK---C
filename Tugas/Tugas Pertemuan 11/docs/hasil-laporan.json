@@ -1,0 +1,22 @@
+{
+  "executedAt": "2026-11-15T15:19:10.166Z",
+  "images": 12,
+  "checks": [
+    {
+      "name": "Pratinjau tanpa overflow 1280",
+      "passed": true
+    },
+    {
+      "name": "Pratinjau tanpa overflow 390",
+      "passed": true
+    },
+    {
+      "name": "Tautan daftar isi menuju bagian yang ada",
+      "passed": true
+    },
+    {
+      "name": "12 gambar tertanam berhasil dimuat",
+      "passed": true
+    }
+  ]
+}
