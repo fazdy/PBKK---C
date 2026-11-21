@@ -1,0 +1,377 @@
+{
+  "time": "2026-11-21T14:10:12.523Z",
+  "os": "Linux 7.0.0-1017-azure x64",
+  "browser": "157.0.8103.78",
+  "php": "8.3.6",
+  "base": "http://127.0.0.1:8080",
+  "before": {
+    "categories": 4,
+    "products": 8,
+    "product_images": 8,
+    "version": "8.0.46-0ubuntu0.24.04.5",
+    "driver": "MySQL",
+    "foreign_keys": [
+      {
+        "child_table": "product_images",
+        "parent_table": "products",
+        "on_update": "CASCADE",
+        "on_delete": "CASCADE"
+      },
+      {
+        "child_table": "products",
+        "parent_table": "categories",
+        "on_update": "CASCADE",
+        "on_delete": "RESTRICT"
+      }
+    ],
+    "invalid_primary_groups": 0
+  },
+  "after": {
+    "categories": 4,
+    "products": 8,
+    "product_images": 8,
+    "version": "8.0.46-0ubuntu0.24.04.5",
+    "driver": "MySQL",
+    "foreign_keys": [
+      {
+        "child_table": "product_images",
+        "parent_table": "products",
+        "on_update": "CASCADE",
+        "on_delete": "CASCADE"
+      },
+      {
+        "child_table": "products",
+        "parent_table": "categories",
+        "on_update": "CASCADE",
+        "on_delete": "RESTRICT"
+      }
+    ],
+    "invalid_primary_groups": 0
+  },
+  "checks": [
+    {
+      "id": "A01",
+      "label": "Tamu diarahkan ke login."
+    },
+    {
+      "id": "P04",
+      "label": "Dashboard menghitung produk, kategori, tersedia, dan tidak tersedia dari database."
+    },
+    {
+      "id": "P01a",
+      "label": "Pagination memisahkan delapan produk menjadi lima dan tiga baris."
+    },
+    {
+      "id": "HOL01",
+      "label": "Kategori baru tersimpan."
+    },
+    {
+      "id": "A02",
+      "label": "Edit kategori tercermin pada daftar."
+    },
+    {
+      "id": "HOL03",
+      "label": "Produk tanpa kategori ditolak tanpa penambahan baris."
+    },
+    {
+      "id": "HOL02",
+      "label": "Produk baru tersimpan dan muncul di daftar."
+    },
+    {
+      "id": "HOL07",
+      "label": "Nilai stok nol diterima."
+    },
+    {
+      "id": "HOL06",
+      "label": "Dua file tersimpan di disk dan dapat dibaca melalui HTTP."
+    },
+    {
+      "id": "HOL04",
+      "label": "Perubahan harga desimal dan stok tersimpan."
+    },
+    {
+      "id": "P01b",
+      "label": "Gabungan pencarian nama dan filter kategori mengembalikan produk yang tepat."
+    },
+    {
+      "id": "A03",
+      "label": "Katalog publik membaca harga dan sampul terbaru."
+    },
+    {
+      "id": "HOL08",
+      "label": "Kategori yang dipakai produk tetap tersimpan."
+    },
+    {
+      "id": "P03",
+      "label": "Perubahan stok memindahkan produk dari kelompok rendah ke kelompok habis."
+    },
+    {
+      "id": "A04",
+      "label": "Status tidak tersedia menyembunyikan produk dari katalog publik."
+    },
+    {
+      "id": "A05",
+      "label": "Jenis file ditolak dan harga serta galeri tidak berubah."
+    },
+    {
+      "id": "P02",
+      "label": "Preview, banyak gambar, ganti sampul, hapus individual, dan pemilihan sampul pengganti."
+    },
+    {
+      "id": "HOL05",
+      "label": "Produk, baris gambar, dan file fisik terhapus."
+    },
+    {
+      "id": "A06",
+      "label": "Kategori kosong dapat dihapus."
+    },
+    {
+      "id": "A07",
+      "label": "Permintaan perubahan tanpa token CSRF mendapat HTTP 403."
+    },
+    {
+      "id": "HOL09",
+      "label": "Customer mendapat HTTP 403 pada halaman admin."
+    },
+    {
+      "id": "HOL10",
+      "label": "Operator mendapat HTTP 200 pada halaman produk."
+    },
+    {
+      "id": "A08",
+      "label": "Dashboard dapat dibaca pada viewport ponsel tanpa overflow halaman."
+    },
+    {
+      "id": "A09",
+      "label": "Kedua foreign key terpasang dan data awal kembali utuh setelah pengujian."
+    }
+  ],
+  "captures": [
+    {
+      "file": "01-login.jpg",
+      "label": "Tamu diarahkan ke halaman masuk",
+      "route": "/login",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "02-dashboard.jpg",
+      "label": "Ringkasan awal dengan 8 produk dan 4 kategori",
+      "route": "/admin/catalog-dashboard",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "03-daftar-produk.jpg",
+      "label": "Daftar produk dan navigasi halaman",
+      "route": "/admin/products",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "04-pagination.jpg",
+      "label": "Halaman kedua dari daftar produk",
+      "route": "/admin/products?q=&kategori=&page=2",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "05-tambah-kategori.jpg",
+      "label": "Form tambah kategori praktikum",
+      "route": "/admin/categories/create",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "06-edit-kategori.jpg",
+      "label": "Pengubahan deskripsi kategori",
+      "route": "/admin/categories/edit/5",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "07-daftar-kategori.jpg",
+      "label": "Daftar kategori setelah perubahan",
+      "route": "/admin/categories",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "08-validasi-kategori.jpg",
+      "label": "Validasi server saat kategori dikosongkan",
+      "route": "/admin/products/create",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "09-preview-upload.jpg",
+      "label": "Dua gambar tampil sebelum formulir produk disimpan",
+      "route": "/admin/products/create",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "10-produk-tersimpan.jpg",
+      "label": "Produk baru tersimpan dengan stok nol",
+      "route": "/admin/products",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "11-detail-galeri.jpg",
+      "label": "Detail produk beserta dua berkas unggahan",
+      "route": "/admin/products/9",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "12-gambar-utama.jpg",
+      "label": "Gambar kedua terpilih sebagai sampul produk",
+      "route": "/admin/products/edit/9",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "13-edit-produk.jpg",
+      "label": "Form edit menampilkan harga, stok, dan galeri yang telah disimpan",
+      "route": "/admin/products/edit/9",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "14-cari-filter.jpg",
+      "label": "Pencarian nama dan filter kategori secara bersamaan",
+      "route": "/admin/products?q=Arunika&kategori=perlengkapan-kampus-0122e19516",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "15-katalog-publik.jpg",
+      "label": "Perubahan sampul dan harga terlihat di katalog pelanggan",
+      "route": "/catalog?q=Arunika",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "16-kategori-terpakai.jpg",
+      "label": "Penghapusan kategori yang masih dipakai ditolak",
+      "route": "/admin/categories",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "17-stok-rendah.jpg",
+      "label": "Produk dengan stok satu hingga lima unit",
+      "route": "/admin/inventory?stok=low",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "18-stok-habis.jpg",
+      "label": "Produk berpindah ke kelompok stok habis setelah diperbarui",
+      "route": "/admin/inventory?stok=empty",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "19-validasi-gambar.jpg",
+      "label": "Penolakan jenis file yang tidak sesuai",
+      "route": "/admin/products/edit/9",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "20-hapus-gambar.jpg",
+      "label": "Satu gambar tersisa dan otomatis menjadi gambar utama",
+      "route": "/admin/products/edit/9",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "21-hapus-produk.jpg",
+      "label": "Penghapusan produk beserta galeri selesai",
+      "route": "/admin/products",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "22-hapus-kategori.jpg",
+      "label": "Kategori kosong berhasil dihapus",
+      "route": "/admin/categories",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "23-customer-403.jpg",
+      "label": "Customer menerima halaman penolakan akses",
+      "route": "/admin/products",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "24-operator.jpg",
+      "label": "Operator dapat mengakses halaman produk",
+      "route": "/admin/products",
+      "viewport": {
+        "width": 1360,
+        "height": 820
+      }
+    },
+    {
+      "file": "25-mobile.jpg",
+      "label": "Ringkasan katalog pada lebar layar 390 piksel",
+      "route": "/admin/catalog-dashboard",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ],
+  "errors": []
+}
