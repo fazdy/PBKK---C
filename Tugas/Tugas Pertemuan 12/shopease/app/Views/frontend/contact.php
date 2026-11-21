@@ -33,7 +33,7 @@
                 </details>
                 <details class="faq-item">
                     <summary>Apa arti harga yang tampil?</summary>
-                    <p>Harga ditampilkan dalam rupiah dan menggunakan data contoh untuk Tugas Pertemuan 11.</p>
+                    <p>Harga ditampilkan dalam rupiah dan menggunakan data contoh untuk Tugas Pertemuan 12.</p>
                 </details>
                 <details class="faq-item">
                     <summary>Apakah sudah bisa melakukan pemesanan?</summary>

@@ -31,7 +31,7 @@ class Session extends BaseConfig
      *
      * The session cookie name, must contain only [0-9a-z_-] characters
      */
-    public string $cookieName = 'shopease11_session';
+    public string $cookieName = 'shopease12_session';
 
     /**
      * --------------------------------------------------------------------------

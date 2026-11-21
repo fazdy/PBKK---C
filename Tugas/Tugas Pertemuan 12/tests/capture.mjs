@@ -162,7 +162,7 @@ try {
     await page.locator('#images').setInputFiles([upload('catatan.txt','text/plain',Buffer.from('catatan praktikum'))]);
     await page.locator('#price').fill('1'); await clickPost(button('Simpan produk')); await textOnPage('Gunakan gambar JPG');
     assert.equal(inspect().product_images,10); await shot('19-validasi-gambar','Penolakan jenis file yang tidak sesuai');
-    await page.reload(); assert.equal(await page.locator('#price').inputValue(),'279000.50');
+    await page.reload(); assert.equal(Number(await page.locator('#price').inputValue()),279000.5);
     pass('A05','Jenis file ditolak dan harga serta galeri tidak berubah.');
     await clickPost(page.locator('.gallery article').first().getByRole('button',{name:'Hapus gambar'}));
     await textOnPage('Gambar dihapus.'); assert.equal(await page.locator('.gallery article').count(),1);

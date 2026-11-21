@@ -4,7 +4,7 @@
 <?= $this->section('content') ?>
 <div class="metrics">
 <?php foreach ([['Semua produk',$stats['total'],'box'],['Kategori',count($categories),'layers'],['Produk tersedia',$stats['active'],'bag'],['Tidak tersedia',$stats['inactive'],'stock']] as [$label,$number,$icon]): ?>
-<div class="metric"><svg><use href="#<?= $icon ?>"/></svg><span><?= esc($label) ?></span><strong><?= (int) $number ?></strong></div>
+<div class="metric"><svg><use href="#pm-<?= $icon ?>"/></svg><span><?= esc($label) ?></span><strong><?= (int) $number ?></strong></div>
 <?php endforeach ?></div>
 <div class="overview-grid"><section class="surface"><header class="section-top"><div><h2>Perlu perhatian</h2><p>Produk dengan sisa stok paling sedikit.</p></div><a href="<?= site_url('admin/inventory') ?>">Inventori →</a></header>
 <?php foreach ($attention as $p): ?><div class="line-item"><img class="thumb" src="<?= esc(pm_cover($p['cover']), 'attr') ?>" alt=""><div class="grow"><a class="product-name" href="<?= site_url('admin/products/' . $p['id_product']) ?>"><?= esc($p['name']) ?></a><small><?= esc($p['category_name']) ?></small></div><span class="tag <?= $p['stock'] == 0 ? 'empty' : 'low' ?>"><?= (int) $p['stock'] ?> unit</span></div><?php endforeach ?>
