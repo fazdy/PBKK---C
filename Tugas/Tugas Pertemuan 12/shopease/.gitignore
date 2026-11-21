@@ -1,0 +1,11 @@
+.env
+/writable/*
+!/writable/cache/
+!/writable/logs/
+!/writable/session/
+!/writable/uploads/
+!/writable/debugbar/
+/writable/*/*
+!/writable/*/.gitkeep
+/vendor/
+.DS_Store

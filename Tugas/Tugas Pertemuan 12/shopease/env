@@ -1,0 +1,9 @@
+# Untuk uji lokal di Mac Intel. Isi password akun MySQL lokal sebelum migrasi.
+CI_ENVIRONMENT = development
+app.baseURL = 'http://localhost:8080/'
+database.default.DBDriver = MySQLi
+database.default.hostname = 127.0.0.1
+database.default.port = 3306
+database.default.database = db_shopease
+database.default.username = shopease
+database.default.password = ''

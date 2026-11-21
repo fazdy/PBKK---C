@@ -1,0 +1,43 @@
+name: Verifikasi praktikum ShopEase
+on:
+  push:
+    branches: [verifikasi-praktikum-12]
+    paths-ignore:
+      - 'Tugas/Tugas Pertemuan 12/docs/**'
+permissions:
+  contents: write
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: Tugas/Tugas Pertemuan 12
+    env:
+      PBKK12_TEST_RUN: '1'
+      PBKK12_TEST_URL: http://127.0.0.1:8080
+      PBKK12_TEST_DSN: mysql:host=127.0.0.1;dbname=db_shopease_test;charset=utf8mb4
+      PBKK12_TEST_USER: root
+      PBKK12_TEST_PASSWORD: root
+      CHROME_PATH: /usr/bin/google-chrome
+    steps:
+      - uses: actions/checkout@v4
+      - name: Siapkan database praktikum sementara
+        run: |
+          sudo systemctl start mysql.service
+          MYSQL_PWD=root mysql -h 127.0.0.1 -uroot -e 'CREATE DATABASE db_shopease_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci'
+          sed -e 's@http://localhost:8080/@http://127.0.0.1:8080/@' -e 's/= db_shopease$/= db_shopease_test/' -e 's/= shopease$/= root/' -e "s/password = ''/password = 'root'/" shopease/env > shopease/.env
+          bash scripts/setup.sh mysql
+      - name: Jalankan aplikasi dan uji di Chrome
+        run: |
+          npm --prefix tests install --ignore-scripts --no-audit --no-fund
+          (cd shopease && php spark serve --host 127.0.0.1 --port 8080) > /tmp/shopease-server.log 2>&1 &
+          for n in $(seq 1 30); do if curl -fsS http://127.0.0.1:8080/login > /dev/null; then break; fi; sleep 1; done
+          node tests/capture.mjs || { tail -60 /tmp/shopease-server.log; tail -40 shopease/writable/logs/log-*.log 2>/dev/null || true; exit 1; }
+      - name: Simpan bukti pengujian pada cabang verifikasi
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- docs/screenshots docs/verifikasi.json
+          git diff --cached --quiet || git commit -m 'test: rekam hasil MySQL dan screenshot Chrome Pertemuan 12'
+          git push origin HEAD:verifikasi-praktikum-12
