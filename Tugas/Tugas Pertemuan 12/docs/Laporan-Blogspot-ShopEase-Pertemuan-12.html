@@ -1,0 +1,300 @@
+<article lang="id" style="max-width:920px;margin:0 auto;color:#2b2733;font:16px/1.65 Arial,Helvetica,sans-serif">
+<header style="background:#f3eefb;border-left:5px solid #6345aa;border-radius:6px;padding:19px 23px"><p style="margin:0 0 6px;color:#645274;font-size:.9em">PBKK Kelas C · Praktikum 12 · 21 November 2026</p><h2 style="margin:0 0 9px;line-height:1.18;color:#30223f">Manajemen produk ShopEase dengan CodeIgniter 4</h2><p style="margin:0">Faizal Aldy Armiriawan · NRP 5025231266<br />Pemrograman Berbasis Kerangka Kerja</p></header>
+<p style="margin:12px 0;line-height:1.68">Pada praktikum ini saya menghubungkan pengelolaan produk dan kategori dengan katalog pelanggan ShopEase. Perubahan harga, stok, dan gambar utama yang disimpan oleh admin atau operator langsung terbaca oleh katalog publik. Saya menggunakan satu produk uji, <strong>Ransel Kampus Arunika</strong>, untuk mengikuti perubahan tersebut dari pembuatan hingga penghapusan.</p>
+<p style="margin:12px 0;line-height:1.68"><a style="color:#51359c;text-decoration:underline" href="https://github.com/fazdy/PBKK---C/tree/main/Tugas/Tugas%20Pertemuan%2012">Buka kode, README, dan screenshot di GitHub</a></p>
+<p style="margin:12px 0;line-height:1.68">Isi laporan &nbsp; <a style="color:#51359c;text-decoration:underline" href="#se12-lingkungan">Persiapan Mac</a> · <a style="color:#51359c;text-decoration:underline" href="#se12-data">Database dan ERD</a> · <a style="color:#51359c;text-decoration:underline" href="#se12-mvc">Implementasi MVC</a> · <a style="color:#51359c;text-decoration:underline" href="#se12-demo">Dokumentasi aplikasi</a> · <a style="color:#51359c;text-decoration:underline" href="#se12-uji">Hasil uji</a></p>
+<h3 id="se12-lingkungan" style="margin:42px 0 12px;padding-top:12px;border-top:2px solid #e3dcee;color:#34244f;font-size:1.38em;line-height:1.3">1. Menyiapkan proyek di MacBook Intel</h3>
+<p style="margin:12px 0;line-height:1.68">Target perangkat saya adalah MacBook Pro 2020 Intel Core i5, RAM 8 GB, dan penyimpanan 256 GB. Aplikasi menggunakan PHP CLI, CodeIgniter 4.7.6, Bootstrap 5.3.3, dan MySQL. Framework, CSS, serta ilustrasi produk sudah tersedia di repositori. Untuk menjalankan aplikasi, saya cukup memakai Terminal dan browser.</p>
+<div style="overflow-x:auto;margin:14px 0"><table style="border-collapse:collapse;width:100%;font-size:.94em"><thead><tr>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Lingkungan</th>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Apa yang diperiksa</th>
+</tr></thead><tbody>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Mac Intel lokal</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">macOS 15.8.3 x86_64, PHP 8.4.12, dan SQLite 3.53.2. Migrasi, seeder, rute, peran, CRUD, serta unggah dan penghapusan gambar dijalankan melalui PHP CGI.</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Server pengambilan screenshot</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Ubuntu 24.04 x86_64, PHP 8.3.6, MySQL 8.0.46, dan Chrome 157.0.8103.78. Browser mengakses server PHP melalui HTTP. <a style="color:#51359c;text-decoration:underline" href="https://github.com/fazdy/PBKK---C/actions/runs/44912481990">Riwayat pengujian MySQL</a></td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Browser pada macOS Intel</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">macOS 15.7.9 x86_64 dengan Chrome 151.0.7922.174, PHP 8.5.9, dan SQLite 3.53.4. Seluruh 24 pemeriksaan browser selesai. <a style="color:#51359c;text-decoration:underline" href="https://github.com/fazdy/PBKK---C/actions/runs/44912743545">Riwayat pengujian macOS</a></td>
+</tr>
+</tbody></table></div>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">1.1 Mengambil kode dan memeriksa PHP</h4>
+<pre style="overflow-x:auto;white-space:pre;background:#28243d;color:#f7f5ff;padding:15px 17px;border-radius:9px;font:13px/1.55 Menlo,Consolas,monospace"><code>git clone https://github.com/fazdy/PBKK---C.git
+cd &quot;PBKK---C/Tugas/Tugas Pertemuan 12&quot;
+php -v
+php -m
+mysql --version</code></pre>
+<p style="margin:12px 0;line-height:1.68">Di Terminal, periksa ekstensi <code style="font-size:.92em;color:#493581">intl</code>, <code style="font-size:.92em;color:#493581">mbstring</code>, <code style="font-size:.92em;color:#493581">mysqli</code>, dan <code style="font-size:.92em;color:#493581">fileinfo</code>. Untuk mode SQLite, periksa juga <code style="font-size:.92em;color:#493581">sqlite3</code>. Jika PHP atau MySQL belum terpasang dan Homebrew sudah tersedia, perintah berikut memasang serta memulai layanan yang diperlukan.</p>
+<pre style="overflow-x:auto;white-space:pre;background:#28243d;color:#f7f5ff;padding:15px 17px;border-radius:9px;font:13px/1.55 Menlo,Consolas,monospace"><code>brew install php mysql
+brew services start mysql</code></pre>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">1.2 Membuat database MySQL untuk praktikum</h4>
+<p style="margin:12px 0;line-height:1.68">Masuk ke MySQL menggunakan akun lokal yang boleh membuat database, misalnya melalui <code style="font-size:.92em;color:#493581">mysql -u root -p</code>. Jalankan SQL berikut untuk instalasi baru. Ganti contoh kata sandi dengan nilai lokal Anda dan gunakan nilai yang sama pada file konfigurasi.</p>
+<pre style="overflow-x:auto;white-space:pre;background:#28243d;color:#f7f5ff;padding:15px 17px;border-radius:9px;font:13px/1.55 Menlo,Consolas,monospace"><code>CREATE DATABASE IF NOT EXISTS db_shopease
+  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER IF NOT EXISTS &#x27;shopease&#x27;@&#x27;127.0.0.1&#x27;
+  IDENTIFIED BY &#x27;GantiDenganPasswordLokal&#x27;;
+GRANT ALL PRIVILEGES ON db_shopease.*
+  TO &#x27;shopease&#x27;@&#x27;127.0.0.1&#x27;;</code></pre>
+<p style="margin:12px 0;line-height:1.68">Dari folder tugas, salin <code style="font-size:.92em;color:#493581">shopease/env</code> menjadi <code style="font-size:.92em;color:#493581">shopease/.env</code> pada checkout baru. Jika file sudah ada, buka file itu dan sesuaikan nilainya.</p>
+<pre style="overflow-x:auto;white-space:pre;background:#28243d;color:#f7f5ff;padding:15px 17px;border-radius:9px;font:13px/1.55 Menlo,Consolas,monospace"><code>CI_ENVIRONMENT = development
+app.baseURL = &#x27;http://localhost:8080/&#x27;
+database.default.DBDriver = MySQLi
+database.default.hostname = 127.0.0.1
+database.default.port = 3306
+database.default.database = db_shopease
+database.default.username = shopease
+database.default.password = &#x27;GantiDenganPasswordLokal&#x27;</code></pre>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">1.3 Migrasi, data contoh, dan server</h4>
+<pre style="overflow-x:auto;white-space:pre;background:#28243d;color:#f7f5ff;padding:15px 17px;border-radius:9px;font:13px/1.55 Menlo,Consolas,monospace"><code>bash scripts/setup.sh mysql
+cd shopease
+php spark migrate:status
+php spark serve</code></pre>
+<p style="margin:12px 0;line-height:1.68">Dari browser, buka <code style="font-size:.92em;color:#493581">http://localhost:8080/login</code>. Setelah login sebagai admin atau operator, pilih <strong>Kelola katalog produk</strong>. Untuk langsung menuju ringkasan setelah login, buka <code style="font-size:.92em;color:#493581">http://localhost:8080/admin/catalog-dashboard</code>. Tekan <kbd>Control</kbd> + <kbd>C</kbd> di Terminal untuk menghentikan server.</p>
+<p style="margin:12px 0;line-height:1.68">Untuk mencoba aplikasi secara ringan pada checkout baru tanpa menyiapkan layanan MySQL, jalankan <code style="font-size:.92em;color:#493581">bash scripts/setup.sh sqlite</code> dari folder tugas, lalu <code style="font-size:.92em;color:#493581">cd shopease</code> dan <code style="font-size:.92em;color:#493581">php spark serve</code>. Pada mode ini data tersimpan di <code style="font-size:.92em;color:#493581">writable/db_shopease.sqlite</code>. Saat berpindah database, ubah <code style="font-size:.92em;color:#493581">.env</code> terlebih dahulu dan jalankan setup untuk driver tujuan.</p>
+<div style="overflow-x:auto;margin:14px 0"><table style="border-collapse:collapse;width:100%;font-size:.94em"><thead><tr>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Akun demo lokal</th>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Email</th>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Kata sandi</th>
+</tr></thead><tbody>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Administrator</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">admin@shopease.test</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">ShopEase!2026</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Operator</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">operator@shopease.test</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">ShopEase!2026</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Customer</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">customer@shopease.test</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">ShopEase!2026</td>
+</tr>
+</tbody></table></div>
+<h3 id="se12-data" style="margin:42px 0 12px;padding-top:12px;border-top:2px solid #e3dcee;color:#34244f;font-size:1.38em;line-height:1.3">2. Merancang relasi data dan mengisi katalog awal</h3>
+<p style="margin:12px 0;line-height:1.68">Saya mempertahankan tabel pengguna dari praktikum autentikasi. Modul ini menambahkan tiga tabel. Setiap produk harus menunjuk kategori yang ada. Satu produk dapat memiliki beberapa gambar. Nama file disimpan di database dan berkas gambarnya disimpan di direktori unggahan.</p>
+<figure style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/erd-katalog.png" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/erd-katalog.png" alt="ERD tiga tabel categories, products, product_images" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>ERD.</strong> Satu kategori memiliki banyak produk. Satu produk dapat memiliki banyak gambar. Kunci dan tipe kolom mengikuti migration MySQL.</figcaption></figure>
+<div style="overflow-x:auto;margin:14px 0"><table style="border-collapse:collapse;width:100%;font-size:.94em"><thead><tr>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Relasi</th>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Jika induk dihapus</th>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Dampak pada aplikasi</th>
+</tr></thead><tbody>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">products.id_category → categories.id_category</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">RESTRICT</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Aplikasi meminta pengguna memindahkan atau menghapus produk sebelum menghapus kategorinya.</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">product_images.id_product → products.id_product</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">CASCADE</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">MySQL menghapus baris gambar yang terkait. Setelah transaksi berhasil, aplikasi membersihkan file fisiknya.</td>
+</tr>
+</tbody></table></div>
+<p style="margin:12px 0;line-height:1.68">Kedua relasi menggunakan <code style="font-size:.92em;color:#493581">ON UPDATE CASCADE</code>. Harga memakai <code style="font-size:.92em;color:#493581">DECIMAL(12,2)</code> agar pecahan rupiah tetap tersimpan. Status penayangan menerima <code style="font-size:.92em;color:#493581">tersedia</code> atau <code style="font-size:.92em;color:#493581">tidak_tersedia</code>. Kolom <code style="font-size:.92em;color:#493581">stock</code> menyimpan jumlah unit. Produk yang stoknya nol tetap dapat dicatat.</p>
+<p style="margin:12px 0;line-height:1.68">Seeder menambahkan kategori Fashion, Elektronik, Olahraga, dan Gaya Hidup. Dua data awal mengikuti contoh HOL, yaitu Sepatu Sneakers seharga Rp 299.000 dengan 15 unit dan Headphone Bluetooth seharga Rp 350.000 dengan 10 unit. Enam produk tambahan membuat halaman kedua, filter stok rendah, dan filter stok habis langsung dapat diuji.</p>
+<pre style="overflow-x:auto;white-space:pre;background:#28243d;color:#f7f5ff;padding:15px 17px;border-radius:9px;font:13px/1.55 Menlo,Consolas,monospace"><code>SELECT c.name AS kategori, COUNT(p.id_product) AS jumlah_produk
+FROM categories AS c
+LEFT JOIN products AS p ON p.id_category = c.id_category
+GROUP BY c.id_category, c.name
+ORDER BY c.name;</code></pre>
+<p style="margin:12px 0;line-height:1.68">Pada database baru, hasilnya Elektronik 2, Fashion 3, Gaya Hidup 2, dan Olahraga 1. Perintah ini dapat dijalankan pada MySQL client untuk membandingkan tabel dengan grafik di dashboard.</p>
+<h3 id="se12-mvc" style="margin:42px 0 12px;padding-top:12px;border-top:2px solid #e3dcee;color:#34244f;font-size:1.38em;line-height:1.3">3. Mengimplementasikan modul dengan MVC</h3>
+<div style="overflow-x:auto;margin:14px 0"><table style="border-collapse:collapse;width:100%;font-size:.94em"><thead><tr>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Komponen</th>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Berkas utama dalam shopease/</th>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Peran pada alur praktikum</th>
+</tr></thead><tbody>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Model</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">app/Models/{Category,Product,ProductImage}Model.php</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Membaca dan menyimpan data. Query daftar produk menggabungkan nama kategori dan gambar utama.</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Controller</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">app/Controllers/Admin/CategoryController.php</code> dan <code style="font-size:.92em;color:#493581">ProductController.php</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Memeriksa input, memanggil operasi simpan atau hapus, lalu mengarahkan kembali ke halaman hasil.</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Pengelolaan gambar</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">app/Libraries/ProductCatalog.php</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Membungkus perubahan produk dan gambar dalam transaksi serta membersihkan file jika penyimpanan dibatalkan.</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">View</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">app/Views/admin/</code> dan <code style="font-size:.92em;color:#493581">app/Views/layouts/management.php</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Menampilkan form, daftar, detail produk, galeri, inventori, dan ringkasan. Bootstrap disajikan dari aset lokal.</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Rute dan hak akses</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">app/Config/Routes.php</code> dan <code style="font-size:.92em;color:#493581">app/Filters/AuthFilter.php</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Membatasi rute pengelolaan pada admin dan operator. Filter membaca akun dan perannya kembali dari tabel users.</td>
+</tr>
+</tbody></table></div>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">3.1 Memisahkan halaman baca dan tindakan perubahan</h4>
+<div style="overflow-x:auto;margin:14px 0"><table style="border-collapse:collapse;width:100%;font-size:.94em"><thead><tr>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Method</th>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Rute</th>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Kegunaan</th>
+</tr></thead><tbody>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">GET</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">/admin/catalog-dashboard</code> · <code style="font-size:.92em;color:#493581">/admin/inventory</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Statistik katalog dan pemantauan stok.</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">GET</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">/admin/products</code> · <code style="font-size:.92em;color:#493581">/admin/products/create</code> · <code style="font-size:.92em;color:#493581">/admin/products/edit/{id}</code> · <code style="font-size:.92em;color:#493581">/admin/products/{id}</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Daftar, formulir tambah/edit, dan detail produk.</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">POST</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">/admin/products/store</code> · <code style="font-size:.92em;color:#493581">/admin/products/update/{id}</code> · <code style="font-size:.92em;color:#493581">/admin/products/delete/{id}</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Menyimpan, memperbarui, atau menghapus produk.</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">GET / POST</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">/admin/categories</code> dengan <code style="font-size:.92em;color:#493581">create, edit/{id}, store, update/{id}, delete/{id}</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Pola method dan aksi mengikuti CRUD produk.</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">POST</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">/admin/products/{id}/images/{id_gambar}/primary</code> · <code style="font-size:.92em;color:#493581">/admin/products/{id}/images/{id_gambar}/delete</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Menetapkan sampul atau menghapus satu gambar milik produk.</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">POST</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><code style="font-size:.92em;color:#493581">/admin/inventory/{id}</code></td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Mengganti jumlah stok dengan pengecekan nilai sebelumnya.</td>
+</tr>
+</tbody></table></div>
+<p style="margin:12px 0;line-height:1.68">Semua form yang mengubah data membawa token CSRF. Controller memeriksa nama, kategori yang benar-benar ada, batas harga, bilangan bulat untuk stok, dan nilai status. Input yang salah menghasilkan pesan pada form. View mengodekan karakter khusus agar masukan pengguna tampil sebagai teks.</p>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">3.2 Menangani upload, gambar utama, dan kegagalan simpan</h4>
+<p style="margin:12px 0;line-height:1.68">Form produk memakai <code style="font-size:.92em;color:#493581">multipart/form-data</code> dan <code style="font-size:.92em;color:#493581">images[]</code>. JavaScript menampilkan preview. Server memeriksa ekstensi, MIME, isi gambar, dan ukuran sebelum menyimpan. Batas implementasi adalah enam gambar per produk dan 2 MiB per gambar. Nama file dibangkitkan secara acak.</p>
+<p style="margin:12px 0;line-height:1.68">Saat produk baru memiliki gambar pertama, aplikasi menandainya sebagai utama. Perubahan galeri mengunci baris produk di MySQL agar dua permintaan tidak memilih dua sampul sekaligus. Jika gambar utama dihapus, gambar tersisa dengan ID paling awal mengambil peran tersebut. Bila transaksi simpan gagal, file baru yang sudah ditulis ikut dibersihkan.</p>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">3.3 Pencarian, inventori, dan dashboard</h4>
+<p style="margin:12px 0;line-height:1.68">Filter nama dan kategori bekerja bersama sebelum pagination lima produk per halaman. Kedua parameter dibawa ke tautan halaman berikutnya. Menu Inventori menampilkan seluruh produk, stok rendah 1–5 unit, atau stok habis 0 unit. Dashboard menghitung jumlah semua produk, kategori, produk tersedia, dan produk tidak tersedia. Katalog publik hanya menayangkan produk berstatus tersedia dan memakai gambar utama yang dipilih pengelola.</p>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">3.4 Mengikuti satu permintaan dari form sampai database</h4>
+<p style="margin:12px 0;line-height:1.68">Saat tombol Simpan produk dipilih, form mengirim nama produk, kategori, harga, stok, status, deskripsi, dan berkas opsional. Router mengarahkannya ke <code style="font-size:.92em;color:#493581">ProductController::store</code>. Setelah input lolos validasi, controller memanggil operasi penyimpanan berikut.</p>
+<pre style="overflow-x:auto;white-space:pre;background:#28243d;color:#f7f5ff;padding:15px 17px;border-radius:9px;font:13px/1.55 Menlo,Consolas,monospace"><code>(new ProductCatalog())-&gt;save($id, $data, $this-&gt;request-&gt;getFileMultiple(&#x27;images&#x27;) ?? []);</code></pre>
+<p style="margin:12px 0;line-height:1.68">Di dalam transaksi, model membuat baris produk. Untuk setiap file yang telah lolos pemeriksaan, aplikasi membuat nama acak dan menghubungkannya dengan ID produk. Berikut potongan yang menjalankan langkah tersebut.</p>
+<pre style="overflow-x:auto;white-space:pre;background:#28243d;color:#f7f5ff;padding:15px 17px;border-radius:9px;font:13px/1.55 Menlo,Consolas,monospace"><code>$filename = bin2hex(random_bytes(16)) . &#x27;.&#x27; . $extension;
+$file-&gt;move(FCPATH . &#x27;uploads/products&#x27;, $filename);
+$written[] = $filename;
+$this-&gt;images-&gt;insert([
+    &#x27;id_product&#x27; =&gt; $id, &#x27;image&#x27; =&gt; $filename, &#x27;is_primary&#x27; =&gt; $count++ === 0 ? 1 : 0,
+    &#x27;created_at&#x27; =&gt; date(&#x27;Y-m-d H:i:s&#x27;),
+]);</code></pre>
+<p style="margin:12px 0;line-height:1.68">Pada saat daftar dibuka, query menggabungkan produk, kategorinya, dan satu gambar berstatus utama. Penggunaan left join untuk gambar membuat produk yang belum memiliki foto tetap dapat ditampilkan. Dua parameter pencarian kemudian diterapkan jika diisi.</p>
+<pre style="overflow-x:auto;white-space:pre;background:#28243d;color:#f7f5ff;padding:15px 17px;border-radius:9px;font:13px/1.55 Menlo,Consolas,monospace"><code>$this-&gt;select(&#x27;products.*, categories.name AS category_name, categories.slug AS category_slug, product_images.image AS cover&#x27;)
+    -&gt;join(&#x27;categories&#x27;, &#x27;categories.id_category = products.id_category&#x27;)
+    -&gt;join(&#x27;product_images&#x27;, &#x27;product_images.id_product = products.id_product AND product_images.is_primary = 1&#x27;, &#x27;left&#x27;);
+if ($q !== &#x27;&#x27;) {
+    $this-&gt;like(&#x27;products.name&#x27;, $q);
+}
+if ($category !== &#x27;&#x27;) {
+    $this-&gt;where(&#x27;categories.slug&#x27;, $category);
+}</code></pre>
+<p style="margin:12px 0;line-height:1.68">Implementasi lengkap tersedia pada <a style="color:#51359c;text-decoration:underline" href="https://github.com/fazdy/PBKK---C/blob/main/Tugas/Tugas%20Pertemuan%2012/shopease/app/Controllers/Admin/ProductController.php">ProductController.php</a>, <a style="color:#51359c;text-decoration:underline" href="https://github.com/fazdy/PBKK---C/blob/main/Tugas/Tugas%20Pertemuan%2012/shopease/app/Libraries/ProductCatalog.php">ProductCatalog.php</a>, dan <a style="color:#51359c;text-decoration:underline" href="https://github.com/fazdy/PBKK---C/blob/main/Tugas/Tugas%20Pertemuan%2012/shopease/app/Models/ProductModel.php">ProductModel.php</a>.</p>
+<h3 id="se12-demo" style="margin:42px 0 12px;padding-top:12px;border-top:2px solid #e3dcee;color:#34244f;font-size:1.38em;line-height:1.3">4. Dokumentasi aplikasi yang sedang berjalan</h3>
+<p style="margin:12px 0;line-height:1.68">Seluruh screenshot berikut direkam dari satu rangkaian pengujian Chrome terhadap server <code style="font-size:.92em;color:#493581">php spark serve</code> dan MySQL. Klik gambar untuk membuka ukuran aslinya. Data kategori dan produk yang ditambahkan selama pengujian dihapus pada akhir rangkaian.</p>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">4.1 Masuk, membaca ringkasan, dan berpindah halaman</h4>
+<figure id="se12-bukti-01" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/01-login.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/01-login.jpg" alt="Tamu diarahkan ke halaman masuk" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 01.</strong> Permintaan awal untuk membuka daftar produk berakhir pada formulir login.</figcaption></figure>
+<figure id="se12-bukti-02" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/02-dashboard.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/02-dashboard.jpg" alt="Ringkasan awal dengan 8 produk dan 4 kategori" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 02.</strong> Data awal menunjukkan 8 produk, 4 kategori, 6 produk tersedia, dan 2 produk tidak tersedia. Dua produk dengan stok nol juga muncul di daftar perhatian.</figcaption></figure>
+<figure id="se12-bukti-03" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/03-daftar-produk.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/03-daftar-produk.jpg" alt="Daftar produk dan navigasi halaman" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 03.</strong> Halaman pertama menampilkan lima produk. Nama produk membuka detail, sementara Edit dan Hapus tersedia per baris.</figcaption></figure>
+<figure id="se12-bukti-04" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/04-pagination.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/04-pagination.jpg" alt="Halaman kedua dari daftar produk" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 04.</strong> Tiga produk sisanya muncul di halaman kedua. Kedua halaman bersama-sama memuat seluruh delapan produk.</figcaption></figure>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">4.2 Membuat dan memperbarui kategori</h4>
+<figure id="se12-bukti-05" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/05-tambah-kategori.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/05-tambah-kategori.jpg" alt="Form tambah kategori praktikum" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 05.</strong> Saya membuat kategori Perlengkapan Kampus sebagai wadah untuk produk uji.</figcaption></figure>
+<figure id="se12-bukti-06" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/06-edit-kategori.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/06-edit-kategori.jpg" alt="Pengubahan deskripsi kategori" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 06.</strong> Deskripsi kategori diubah menjadi “Ransel dan kebutuhan harian mahasiswa”.</figcaption></figure>
+<figure id="se12-bukti-07" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/07-daftar-kategori.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/07-daftar-kategori.jpg" alt="Daftar kategori setelah perubahan" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 07.</strong> Daftar menampilkan deskripsi baru dan jumlah produk dalam tiap kategori.</figcaption></figure>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">4.3 Menguji validasi dan menyimpan produk beserta gambar</h4>
+<figure id="se12-bukti-08" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/08-validasi-kategori.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/08-validasi-kategori.jpg" alt="Validasi server saat kategori dikosongkan" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 08.</strong> Pesan “Pilih kategori produk” berasal dari pemeriksaan server. Jumlah produk tetap delapan.</figcaption></figure>
+<figure id="se12-bukti-09" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/09-preview-upload.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/09-preview-upload.jpg" alt="Dua gambar tampil sebelum formulir produk disimpan" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 09.</strong> Setelah melengkapi kategori pada form yang sama, saya memilih gambar ransel dan foto detail. Kedua preview sudah terlihat sebelum form dikirim ulang.</figcaption></figure>
+<figure id="se12-bukti-10" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/10-produk-tersimpan.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/10-produk-tersimpan.jpg" alt="Produk baru tersimpan dengan stok nol" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 10.</strong> Ransel Kampus Arunika tersimpan dengan stok 0 dan harga Rp 289.000. Status penayangan dan jumlah unit dapat diatur secara terpisah.</figcaption></figure>
+<figure id="se12-bukti-11" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/11-detail-galeri.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/11-detail-galeri.jpg" alt="Detail produk beserta dua berkas unggahan" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 11.</strong> Dua gambar dapat dibuka melalui HTTP dan ditemukan di direktori unggahan. Gambar pertama menjadi sampul awal.</figcaption></figure>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">4.4 Mengubah sampul dan harga, lalu memeriksa katalog pelanggan</h4>
+<figure id="se12-bukti-12" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/12-gambar-utama.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/12-gambar-utama.jpg" alt="Gambar kedua terpilih sebagai sampul produk" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 12.</strong> Setelah gambar detail dijadikan utama, penanda sampul berpindah ke gambar itu.</figcaption></figure>
+<figure id="se12-bukti-13" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/13-edit-produk.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/13-edit-produk.jpg" alt="Form edit menampilkan harga, stok, dan galeri yang telah disimpan" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 13.</strong> Harga diubah menjadi Rp 279.000,50 dan stok menjadi 4 unit. Gambar lama tetap terlihat di bawah form.</figcaption></figure>
+<figure id="se12-bukti-14" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/14-cari-filter.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/14-cari-filter.jpg" alt="Pencarian nama dan filter kategori secara bersamaan" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 14.</strong> Kata “Arunika” dan kategori Perlengkapan Kampus menghasilkan satu baris. Harga dan stok baru terlihat pada baris tersebut.</figcaption></figure>
+<figure id="se12-bukti-15" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/15-katalog-publik.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/15-katalog-publik.jpg" alt="Perubahan sampul dan harga terlihat di katalog pelanggan" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 15.</strong> Katalog pelanggan membaca sampul baru dan harga Rp 279.000,50 dari produk yang sama.</figcaption></figure>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">4.5 Menjaga relasi kategori dan memperbarui stok</h4>
+<figure id="se12-bukti-16" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/16-kategori-terpakai.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/16-kategori-terpakai.jpg" alt="Penghapusan kategori yang masih dipakai ditolak" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 16.</strong> Kategori Perlengkapan Kampus masih dipakai. Aplikasi menampilkan penolakan dan kategori tetap terdaftar.</figcaption></figure>
+<figure id="se12-bukti-17" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/17-stok-rendah.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/17-stok-rendah.jpg" alt="Produk dengan stok satu hingga lima unit" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 17.</strong> Filter rendah memuat produk dengan 1–5 unit, termasuk Ransel Kampus Arunika yang memiliki 4 unit.</figcaption></figure>
+<figure id="se12-bukti-18" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/18-stok-habis.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/18-stok-habis.jpg" alt="Produk berpindah ke kelompok stok habis setelah diperbarui" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 18.</strong> Setelah stok ransel diubah ke 0, produk berpindah ke kelompok stok habis.</figcaption></figure>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">4.6 Menguji unggahan dan menghapus data praktikum</h4>
+<figure id="se12-bukti-19" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/19-validasi-gambar.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/19-validasi-gambar.jpg" alt="Penolakan jenis file yang tidak sesuai" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 19.</strong> File teks ditolak. Pemeriksaan lanjutan memastikan perubahan harga yang diajukan bersamanya juga tidak tersimpan.</figcaption></figure>
+<figure id="se12-bukti-20" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/20-hapus-gambar.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/20-hapus-gambar.jpg" alt="Satu gambar tersisa dan otomatis menjadi gambar utama" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 20.</strong> Penghapusan gambar utama mengangkat gambar pertama yang tersisa sebagai sampul. URL gambar yang dihapus menghasilkan HTTP 404.</figcaption></figure>
+<figure id="se12-bukti-21" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/21-hapus-produk.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/21-hapus-produk.jpg" alt="Penghapusan produk beserta galeri selesai" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 21.</strong> Setelah konfirmasi, produk dihapus. Dua pemeriksaan lanjutan memastikan baris gambar dan file fisiknya ikut hilang.</figcaption></figure>
+<figure id="se12-bukti-22" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/22-hapus-kategori.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/22-hapus-kategori.jpg" alt="Kategori kosong berhasil dihapus" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 22.</strong> Kategori Perlengkapan Kampus dapat dihapus setelah produknya dihapus. Jumlah kategori kembali menjadi empat.</figcaption></figure>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">4.7 Memeriksa hak akses dan tampilan ponsel</h4>
+<figure id="se12-bukti-23" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/23-customer-403.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/23-customer-403.jpg" alt="Customer menerima halaman penolakan akses" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 23.</strong> Customer yang sudah login tetap menerima HTTP 403 ketika membuka daftar produk admin.</figcaption></figure>
+<figure id="se12-bukti-24" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/24-operator.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/24-operator.jpg" alt="Operator dapat mengakses halaman produk" loading="lazy" style="display:block;width:100%;max-width:1100px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 24.</strong> Operator membuka alamat daftar produk yang sama dan menerima HTTP 200. Label peran tampil di kanan atas.</figcaption></figure>
+<figure id="se12-bukti-25" style="margin:20px 0 25px"><a href="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/25-mobile.jpg" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fazdy/PBKK---C/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots/25-mobile.jpg" alt="Ringkasan katalog pada lebar layar 390 piksel" loading="lazy" style="display:block;width:100%;max-width:390px;height:auto;margin:auto;border:1px solid #ddd6e8;border-radius:8px" /></a><figcaption style="margin:7px 2px 0;color:#554d60;font-size:.91em;line-height:1.55"><strong>Bukti 25.</strong> Pada viewport 390 piksel, navigasi berpindah ke atas dan ringkasan tersusun dua kolom. Pengujian juga memeriksa lebar halaman.</figcaption></figure>
+<h3 id="se12-uji" style="margin:42px 0 12px;padding-top:12px;border-top:2px solid #e3dcee;color:#34244f;font-size:1.38em;line-height:1.3">5. Hasil pengujian dan kesimpulan</h3>
+<div style="overflow-x:auto;margin:14px 0"><table style="border-collapse:collapse;width:100%;font-size:.94em"><thead><tr>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Skenario wajib HOL</th>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Hasil aktual</th>
+<th scope="col" style="text-align:left;vertical-align:top;padding:9px 11px;background:#eee8f8;border:1px solid #ded7e9;color:#402d5c">Bukti</th>
+</tr></thead><tbody>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">1. Tambah kategori</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Perlengkapan Kampus tersimpan dan muncul dalam daftar.</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><a style="color:#51359c;text-decoration:underline" href="#se12-bukti-05">05</a>, <a style="color:#51359c;text-decoration:underline" href="#se12-bukti-07">07</a></td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">2. Tambah produk</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Ransel Kampus Arunika muncul dalam daftar dan halaman detail.</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><a style="color:#51359c;text-decoration:underline" href="#se12-bukti-10">10</a>, <a style="color:#51359c;text-decoration:underline" href="#se12-bukti-11">11</a></td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">3. Produk tanpa kategori</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Server menolak formulir. Jumlah produk tetap delapan.</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><a style="color:#51359c;text-decoration:underline" href="#se12-bukti-08">08</a></td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">4. Edit produk</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Harga baru Rp 279.000,50 dan stok 4 terbaca kembali.</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><a style="color:#51359c;text-decoration:underline" href="#se12-bukti-13">13</a>, <a style="color:#51359c;text-decoration:underline" href="#se12-bukti-14">14</a>, <a style="color:#51359c;text-decoration:underline" href="#se12-bukti-15">15</a></td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">5. Hapus produk</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Produk dan baris gambarnya hilang. URL file yang dihapus mengembalikan 404.</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><a style="color:#51359c;text-decoration:underline" href="#se12-bukti-20">20</a>, <a style="color:#51359c;text-decoration:underline" href="#se12-bukti-21">21</a></td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">6. Upload gambar</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Dua file tersimpan di disk dan masing-masing mengembalikan HTTP 200.</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><a style="color:#51359c;text-decoration:underline" href="#se12-bukti-09">09</a>, <a style="color:#51359c;text-decoration:underline" href="#se12-bukti-11">11</a></td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">7. Stok nol</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Produk baru dengan stok 0 berhasil disimpan.</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><a style="color:#51359c;text-decoration:underline" href="#se12-bukti-10">10</a></td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">8. Hapus kategori terpakai</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Penghapusan ditolak selama kategori masih memiliki produk.</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><a style="color:#51359c;text-decoration:underline" href="#se12-bukti-16">16</a></td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">9. Customer membuka area admin</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Akun customer yang sudah login mendapatkan HTTP 403.</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><a style="color:#51359c;text-decoration:underline" href="#se12-bukti-23">23</a></td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">10. Operator membuka halaman produk</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb">Akun operator mendapatkan HTTP 200.</td>
+<td style="text-align:left;vertical-align:top;padding:9px 11px;border:1px solid #e4dfeb"><a style="color:#51359c;text-decoration:underline" href="#se12-bukti-24">24</a></td>
+</tr>
+</tbody></table></div>
+<p style="margin:12px 0;line-height:1.68">MySQL dan Chrome menyelesaikan <strong>24 pemeriksaan</strong>, termasuk sepuluh skenario wajib serta pengujian keempat tugas pengembangan. Pemeriksaan terakhir menemukan dua foreign key, tidak ada produk bergambar dengan jumlah sampul yang keliru, serta jumlah data kembali ke 4 kategori, 8 produk, dan 8 gambar. <a style="color:#51359c;text-decoration:underline" href="https://github.com/fazdy/PBKK---C/blob/main/Tugas/Tugas%20Pertemuan%2012/docs/verifikasi.json">Hasil pemeriksaan dalam JSON</a>.</p>
+<p style="margin:12px 0;line-height:1.68">Contoh yang paling jelas terlihat saat harga dan sampul ransel diubah. Halaman detail, pencarian admin, dan katalog pelanggan menampilkan perubahan dari record yang sama. Uji hapus juga memperlihatkan dua perilaku berbeda yang dibutuhkan toko. Kategori terpakai dipertahankan, sementara gambar produk dibersihkan ketika produknya dihapus.</p>
+<h4 style="font-size:1.1em;color:#442e66;margin:23px 0 8px">Bahan dan referensi</h4>
+<p style="margin:12px 0;line-height:1.68">Bahan perkuliahan PBKK kelas C meliputi <i>HOL Product Management ShopEase CI4</i> (bagian A–R), dua modul autentikasi ShopEase, serta ilustrasi PPT tentang ERD, routing, MVC, dan desain antarmuka pengelolaan produk.</p>
+<p style="margin:12px 0;line-height:1.68">Dokumentasi teknis yang digunakan tersedia di <a style="color:#51359c;text-decoration:underline" href="https://codeigniter4.github.io/userguide/dbmgmt/migration.html">Migration CodeIgniter 4</a> · <a style="color:#51359c;text-decoration:underline" href="https://codeigniter4.github.io/userguide/libraries/uploaded_files.html">Uploaded Files CodeIgniter 4</a> · <a style="color:#51359c;text-decoration:underline" href="https://dev.mysql.com/doc/refman/8.4/en/create-table-foreign-keys.html">Foreign key MySQL</a>.</p>
+<p style="margin:12px 0;line-height:1.68"><a style="color:#51359c;text-decoration:underline" href="https://github.com/fazdy/PBKK---C/tree/main/Tugas/Tugas%20Pertemuan%2012">Kode sumber Tugas Pertemuan 12</a> · <a style="color:#51359c;text-decoration:underline" href="https://github.com/fazdy/PBKK---C/blob/main/Tugas/Tugas%20Pertemuan%2012/README.md">Panduan menjalankan di Mac</a> · <a style="color:#51359c;text-decoration:underline" href="https://github.com/fazdy/PBKK---C/tree/main/Tugas/Tugas%20Pertemuan%2012/docs/screenshots">Folder screenshot asli</a></p>
+</article>

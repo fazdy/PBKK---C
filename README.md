@@ -13,3 +13,4 @@ Repositori untuk tugas-tugas mata kuliah Pemrograman Berbasis Kerangka Kerja (PB
 - **[Tugas Pertemuan 9](./Tugas/Tugas%20Pertemuan%209/)**: Pengenalan Framework CodeIgniter: Tokobuah (Latihan 1), SIAKAD dan Toko Online KampusMart (Latihan 2) (PHP 8.2, CodeIgniter 3.1.13, MySQL/MariaDB, Bootstrap)
 - **[Tugas Pertemuan 10](./Tugas/Tugas%20Pertemuan%2010/)**: Landing Page ShopEase (CodeIgniter 4, PHP, Bootstrap 5)
 - **[Tugas Pertemuan 11](./Tugas/Tugas%20Pertemuan%2011/)**: Sistem Autentikasi ShopEase (CodeIgniter 4, PHP, MySQL/SQLite, Registrasi, Login, Session, dan Role)
+- **[Tugas Pertemuan 12](./Tugas/Tugas%20Pertemuan%2012/)**: Manajemen Produk ShopEase (CodeIgniter 4, CRUD kategori dan produk, galeri gambar, inventori, dashboard, MySQL/SQLite).

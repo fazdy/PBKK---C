@@ -1,0 +1,11 @@
+{
+  "os": "Darwin 24.6.0 x64",
+  "time": "2026-11-21T14:14:55.740Z",
+  "php": "8.5.9",
+  "browser": "151.0.7922.174",
+  "sqlite": "3.53.4",
+  "checks": 24,
+  "captures": 25,
+  "run": "https://github.com/fazdy/PBKK---C/actions/runs/44912743545",
+  "macos": "15.7.9"
+}
